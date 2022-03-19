@@ -63,10 +63,10 @@ mongoose
  */
 app.get("/", isAuthenticated, isAuthorized(ROLES.Admin), homeController.index);
 app.post("/login", userController.postLogin);
-app.use("/api/question", questions)
-app.use("/api/subject", subject)
-app.use("/api/topic", topic)
-app.use("/api/test", test)
+app.use("/api/question", isAuthenticated, questions)
+app.use("/api/subject", isAuthenticated, subject)
+app.use("/api/topic", isAuthenticated, topic)
+app.use("/api/test", isAuthenticated, test)
 
 
 // All other GET requests not handled before will return our React app
