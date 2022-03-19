@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 export type Markup = {
     text: string,
-    images: string[],
+    images?: string[],
 }
 
 export type QuestionStatus = "freeze" | "pending" | "duplicate" | "removed";
@@ -11,16 +11,16 @@ export type QuestionDocument = mongoose.Document & {
     subject: mongoose.Schema.Types.ObjectId;
     topic: mongoose.Schema.Types.ObjectId;
     statement: Markup,
-    options: { id: number } & Markup;
+    options: ({ id: number } & Markup)[];
     correctAnswer: number;
-    solution: Markup;
+    solution?: Markup;
     status: QuestionStatus;
 };
 
 const MarkupSchema = {
     text: { type: String, required: true },
     images: [String],
-};
+}
 
 const QuestionSchema = new mongoose.Schema<QuestionDocument>({
     subject: {
@@ -32,12 +32,12 @@ const QuestionSchema = new mongoose.Schema<QuestionDocument>({
         ref: "topic",
     },
     statement: MarkupSchema,
-    options: {
+    options: [{
         id: { type: Number, required: true },
         ...MarkupSchema,
-    },
+    }],
     correctAnswer: { type: Number, required: true },
-    solution: MarkupSchema,
+    solution: { type: MarkupSchema, required: false },
     status: { type: String, required: true },
 });
 
