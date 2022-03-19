@@ -14,7 +14,7 @@ async function create(req: Request, res: Response) {
 
 async function info(req: Request, res: Response) {
     // TODO: handle non admin access
-    const id = req.params.id;
+    const id = req.query.id;
     const question = await Question.findById(id).exec();
     res.json(question);
 }
