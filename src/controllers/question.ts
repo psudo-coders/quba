@@ -31,15 +31,8 @@ async function update(req: Request, res: Response) {
     res.sendStatus(200);
 }
 
-async function updateStatus(req: Request, res: Response) {
-    let id = req.body.id;
-    await Question.findByIdAndUpdate(id, { status: req.body.status });
-    res.sendStatus(200);
-}
-
 export default Router()
     .post("/create", handleError(create))
     .get("/info", handleError(info))
     .get("/list", handleError(list))
     .post("/update", handleError(update))
-    .post("/update-status", handleError(updateStatus))
