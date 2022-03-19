@@ -1,13 +1,25 @@
 import mongoose from "mongoose";
 
+export type Markup = {
+    text: string,
+    images: string[],
+}
+
+export type QuestionStatus = "freeze" | "pending" | "duplicate" | "removed";
+
 export type QuestionDocument = mongoose.Document & {
     subject: mongoose.Schema.Types.ObjectId;
     topic: mongoose.Schema.Types.ObjectId;
-    statement: { problem: string; diagram: [string] };
-    options: { id: number; choice: string; diagram: string };
+    statement: Markup,
+    options: { id: number } & Markup;
     correctAnswer: number;
-    solution: { text: string; diagram: [string] };
-    status: string;
+    solution: Markup;
+    status: QuestionStatus;
+};
+
+const MarkupSchema = {
+    text: { type: String, required: true },
+    images: [String],
 };
 
 const QuestionSchema = new mongoose.Schema<QuestionDocument>({
@@ -19,20 +31,13 @@ const QuestionSchema = new mongoose.Schema<QuestionDocument>({
         type: mongoose.Schema.Types.ObjectId,
         ref: "topic",
     },
-    statement: {
-        problem: { type: String, required: true },
-        diagram: [String],
-    },
+    statement: MarkupSchema,
     options: {
         id: { type: Number, required: true },
-        choice: String,
-        diagram: String,
+        ...MarkupSchema,
     },
     correctAnswer: { type: Number, required: true },
-    solution: {
-        text: String,
-        diagram: [String],
-    },
+    solution: MarkupSchema,
     status: { type: String, required: true },
 });
 
