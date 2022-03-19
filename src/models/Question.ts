@@ -8,6 +8,7 @@ export type Markup = {
 export type QuestionStatus = "freeze" | "pending" | "duplicate" | "removed";
 
 export type QuestionDocument = mongoose.Document & {
+    author: mongoose.Schema.Types.ObjectId,
     subject: mongoose.Schema.Types.ObjectId;
     topic: mongoose.Schema.Types.ObjectId;
     statement: Markup,
@@ -23,13 +24,16 @@ const MarkupSchema = {
 }
 
 const QuestionSchema = new mongoose.Schema<QuestionDocument>({
+    author: { type: mongoose.Schema.Types.ObjectId, ref: "user", required: true },
     subject: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "subject",
+        required: true,
     },
     topic: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "topic",
+        required: true,
     },
     statement: MarkupSchema,
     options: [{

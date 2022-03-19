@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
 
 export type SubjectDocument = mongoose.Document & {
-    _id: string;
     name: string;
 };
 
