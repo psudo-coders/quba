@@ -1,0 +1,36 @@
+.attach-txt-area {
+    margin: 5px 0 10px 0;
+}
+
+.attach-txt-area textarea {
+    width: 100%;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    box-sizing: border-box;
+    border-radius: 5px;
+    outline-color: #2B6DE6;
+
+    font-family: Poppins, cursive;
+
+    padding: 10px 15px;
+}
+
+.attach-txt-area h2 {
+    font-weight: 500;
+    font-size: 20px;
+}
+
+.attach-txt-area .attach-quest-imgs {
+    outline: none;
+    border: none;
+    background: none;
+    color: #55586C;
+
+    display: flex;
+    align-items: center;
+
+    margin-left: auto;
+}
+
+.attach-txt-area .attach-quest-imgs svg {
+    margin-right: 5px;
+}

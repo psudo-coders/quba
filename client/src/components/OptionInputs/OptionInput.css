@@ -1,0 +1,53 @@
+.option-input-wrapper {
+    display: flex;
+    align-items: center;
+
+    margin-left: 50px;
+}
+
+.option-input-wrapper p {
+    font-size: 18px;
+    color: #55586C;
+
+    margin-right: 10px;
+}
+
+.option-input-wrapper .inputs {
+    background: #FFFFFF;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    box-sizing: border-box;
+    border-radius: 2px;
+
+    width: 100%;
+
+    padding: 4px 10px;
+
+    display: flex;
+    align-items: center;
+}
+
+.option-input-wrapper .inputs input {
+    border: none;
+    background: none;
+    outline: none;
+
+    font-family: Poppins, cursive;
+
+    width: 100%;
+}
+
+.option-input-wrapper .inputs svg {
+    padding: 8px;
+    border-radius: 5px;
+    margin: 0 3px;
+}
+
+.option-input-wrapper .inputs .option-tick {
+    color: #2CCAA9;
+    background: #EAFAF6;
+}
+
+.option-input-wrapper .inputs .option-attach {
+    color: white;
+    background: #2B6DE6;
+}

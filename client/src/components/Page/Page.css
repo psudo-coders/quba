@@ -1,0 +1,30 @@
+.page {
+    display: flex;
+    min-height: 100vh;
+    box-sizing: border-box;
+}
+
+.page-section {
+    flex: 1;
+}
+
+.page-section-content {
+    margin: 10px 80px 30px 80px;
+}
+
+.page-section-content .heading {
+    font-size: 28px;
+    margin: 0 0;
+}
+
+.page-section-content .sub-heading {
+    margin: 5px 0 10px 0;
+    font-size: 15px;
+    color: #A1A4AE;
+
+    font-weight: 400;
+}
+
+.page-section-header {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+}
