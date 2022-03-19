@@ -1,16 +1,6 @@
 import { Request, Response, Router } from "express";
 import { Question } from "../models/Question"
-
-function handleError(inner: (req: Request, res: Response) => Promise<void>) {
-    return async (req: Request, res: Response) => {
-        try {
-            await inner(req, res);
-        } catch (e) {
-            // everything is bad request
-            res.status(400).json(e);
-        }
-    }
-}
+import { handleError } from "./util"
 
 async function create(req: Request, res: Response) {
     // TODO: handle attachments
