@@ -13,3 +13,12 @@
 .blue-screen button {
     margin-top: 20px;
 }
+
+.pagination {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.pagination .input-btn {
+    margin: 20px 5px;
+}

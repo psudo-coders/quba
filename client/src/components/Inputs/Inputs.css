@@ -1,4 +1,4 @@
-input {
+input.input {
     background: #F1F3F6;
     border: 1px solid #A1A4AE;
     box-sizing: border-box;
@@ -14,7 +14,7 @@ input {
     font-size: 14px;
 }
 
-button {
+.input-btn {
     background: #2B6DE6;
     border-radius: 10px;
 
@@ -30,9 +30,28 @@ button {
     color: #fff;
 
     transition: all 0.3s ease-in-out;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-button:hover {
+.input-btn.full {
+    width: 100%;
+    font-size: 15px;
+}
+
+.input-btn.alt {
+    background: #EAF0FD;
+    color: #2B6DE6;
+    border-color:#EAF0FD;
+}
+
+.input-btn svg {
+    margin-left: 10px;
+}
+
+.input-btn:hover {
     background: white;
     color: #2B6DE6;
 }

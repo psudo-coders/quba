@@ -6,6 +6,10 @@
     font-family: "Roboto", cursive;
 }
 
+.logo.alt {
+    color: black;
+}
+
 .logo svg {
     font-size: 40px;
     transform: rotate(35deg);

@@ -1,0 +1,13 @@
+.submit-question-form {
+    margin: 20px 0;
+    padding: 10px 60px;
+    background: #F1F3F6;
+}
+
+.question-status {
+    background: #2CCAA9;
+    border-radius: 20px;
+
+    width: 24px;
+    height: 5px;
+}
