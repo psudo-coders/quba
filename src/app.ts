@@ -8,11 +8,15 @@ import mongoose from "mongoose";
 
 // Controllers (route handlers)
 import * as homeController from "./controllers/home";
+import * as userController from "./controllers/user";
 
-//Create express app
+import { isAuthenticated, isAuthorized } from "./config/passport";
+import { ROLES } from "./util/roles";
+
+// Create express app
 const app = express();
 
-//Express configuration
+// Express configuration
 app.set("port", process.env.PORT || 3001);
 app.use(compression());
 app.use(bodyParser.json());
@@ -53,7 +57,8 @@ mongoose
 /**
  * Primary app routes
  */
-app.get("/", homeController.index);
+app.get("/", isAuthenticated, isAuthorized(ROLES.Admin), homeController.index);
+app.post("/login", userController.postLogin);
 
 // All other GET requests not handled before will return our React app
 app.get("*", (req: Request, res: Response): void => {
