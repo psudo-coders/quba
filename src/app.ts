@@ -38,7 +38,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Connect to MongoDB
-const mongoUrl = "mongodb://localhost:27017/quba";
+const mongoUrl = "mongodb://127.0.0.1:27017/quba";
 
 mongoose
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
