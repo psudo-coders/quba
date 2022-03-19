@@ -1,0 +1,38 @@
+input {
+    background: #F1F3F6;
+    border: 1px solid #A1A4AE;
+    box-sizing: border-box;
+    border-radius: 10px;
+
+    padding: 10px 20px;
+
+    font-family: Poppins, cursive;
+    margin: 5px 0;
+
+    outline-color: #2B6DE6;
+
+    font-size: 14px;
+}
+
+button {
+    background: #2B6DE6;
+    border-radius: 10px;
+
+    padding: 8px 20px;
+
+    font-family: Poppins, cursive;
+    margin: 5px 0;
+
+    outline: none;
+    border: solid 3px #2B6DE6;
+
+    font-size: 14px;
+    color: #fff;
+
+    transition: all 0.3s ease-in-out;
+}
+
+button:hover {
+    background: white;
+    color: #2B6DE6;
+}

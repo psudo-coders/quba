@@ -1,0 +1,19 @@
+.logo {
+    display: flex;
+    align-items: center;
+    color: white;
+
+    font-family: "Roboto", cursive;
+}
+
+.logo svg {
+    font-size: 40px;
+    transform: rotate(35deg);
+}
+
+.logo p {
+    font-weight: 500;
+    font-size: 4vh;
+
+    margin-left: 15px;
+}

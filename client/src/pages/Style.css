@@ -1,0 +1,15 @@
+.blue-screen {
+    background: #2B6DE6;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0 50px;
+
+    box-sizing: border-box;
+}
+
+.blue-screen button {
+    margin-top: 20px;
+}
