@@ -10,6 +10,9 @@ import mongoose from "mongoose";
 import * as homeController from "./controllers/home";
 import * as userController from "./controllers/user";
 import questions from "./controllers/question"
+import subject from "./controllers/subject"
+import topic from "./controllers/topic"
+import test from "./controllers/test"
 
 import { isAuthenticated, isAuthorized } from "./config/passport";
 import { ROLES } from "./util/roles";
@@ -61,6 +64,10 @@ mongoose
 app.get("/", isAuthenticated, isAuthorized(ROLES.Admin), homeController.index);
 app.post("/login", userController.postLogin);
 app.use("/api/question", questions)
+app.use("/api/subject", subject)
+app.use("/api/topic", topic)
+app.use("/api/test", test)
+
 
 // All other GET requests not handled before will return our React app
 app.get("*", (req: Request, res: Response): void => {
