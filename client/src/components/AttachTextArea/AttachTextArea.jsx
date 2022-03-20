@@ -4,7 +4,7 @@ import { ImAttachment } from "react-icons/im";
 import "./AttachTextArea.css";
 
 function AttachTextArea(props) {
-    const { heading, placeholder } = props;
+    const { heading, placeholder, noAttach, ...passingProps } = props;
 
     return (
         <div className={"attach-txt-area"}>
@@ -14,11 +14,14 @@ function AttachTextArea(props) {
                 rows="6"
                 style={{ resize: "none" }}
                 placeholder={placeholder}
+                {...passingProps}
             />
-            <button className={"attach-quest-imgs"}>
-                <ImAttachment />
-                Attach images
-            </button>
+            {!noAttach && (
+                <button className={"attach-quest-imgs"}>
+                    <ImAttachment />
+                    Attach images
+                </button>
+            )}
         </div>
     );
 }

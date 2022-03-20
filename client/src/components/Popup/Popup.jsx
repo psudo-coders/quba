@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { FaTimesCircle } from "react-icons/all";
+import { FaTimesCircle } from "react-icons/fa";
 
 import "./Popup.css";
 
@@ -35,7 +35,7 @@ function Popup(props) {
                 <div className="popup-footer">{props.footer}</div>
             </div>
         </div>,
-        document.getElementById("#root")
+        document.getElementById("root")
     );
 }
 

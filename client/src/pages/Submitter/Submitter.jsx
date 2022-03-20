@@ -10,6 +10,7 @@ import { FaPlus } from "react-icons/fa";
 
 import "./Submitter.css";
 import YourQuestions from "./YourQuestions";
+import ViewQuestionPopup from "./ViewQuestionPopup";
 
 const sidebarOptions = [
     {
@@ -27,8 +28,15 @@ const sidebarOptions = [
 function Submitter(props) {
     return (
         <>
-            {/*<SubmitQuestion sidebarOptions={sidebarOptions} />*/}
-            <YourQuestions sidebarOptions={sidebarOptions} />
+            <ViewQuestionPopup />
+            {/*<Route*/}
+            {/*    path="/submitter"*/}
+            {/*    element={<SubmitQuestion sidebarOptions={sidebarOptions} />}*/}
+            {/*/>*/}
+            {/*<Route*/}
+            {/*    path="myquestions"*/}
+            {/*    element={<YourQuestions sidebarOptions={sidebarOptions} />}*/}
+            {/*/>*/}
         </>
     );
 }

@@ -11,8 +11,8 @@ function FormCard(props) {
             <h1>{heading}</h1>
             <div className="form-card-inputs">{props.children}</div>
             <div className="form-card-footer">
-                {footerLinks.map((ftLink) => (
-                    <FooterLink {...ftLink} />
+                {footerLinks.map((ftLink, i) => (
+                    <FooterLink key={i} {...ftLink} />
                 ))}
             </div>
         </div>
