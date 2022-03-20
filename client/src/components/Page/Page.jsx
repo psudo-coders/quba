@@ -5,19 +5,27 @@ import TopBar from "../TopBar/TopBar";
 import "./Page.css";
 
 function Page(props) {
-    const { sidebarOptions, heading, subHeading } = props;
+    const { sidebarOptions, heading, subHeading, search, dropdowns } = props;
 
     return (
         <div className={"page"}>
             <Sidebar options={sidebarOptions} />
             <div className="page-section">
-                <TopBar />
+                <TopBar search={search && search} />
                 <div className="page-section-content">
                     <div className="page-section-header">
-                        {heading && <h1 className={"heading"}>{heading}</h1>}
-                        {subHeading && (
-                            <p className={"sub-heading"}>{subHeading}</p>
-                        )}
+                        <div className={"page-section-heading"}>
+                            {heading && (
+                                <h1 className={"heading"}>{heading}</h1>
+                            )}
+
+                            {subHeading && (
+                                <p className={"sub-heading"}>{subHeading}</p>
+                            )}
+                        </div>
+                        <div className={"dropdowns"}>
+                            {dropdowns && dropdowns}
+                        </div>
                     </div>
 
                     {props.children}
@@ -26,5 +34,10 @@ function Page(props) {
         </div>
     );
 }
+
+Page.defaultProps = {
+    search: false,
+    dropdowns: false,
+};
 
 export default Page;

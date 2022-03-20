@@ -9,7 +9,7 @@
 }
 
 .page-section-content {
-    margin: 10px 80px 30px 80px;
+    margin: 40px 80px 30px 80px;
 }
 
 .page-section-content .heading {
@@ -27,4 +27,10 @@
 
 .page-section-header {
     border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.page-section-header .dropdowns {
+    margin-left: auto;
 }
