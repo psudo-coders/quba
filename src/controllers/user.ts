@@ -2,6 +2,8 @@ import { body, check, validationResult } from "express-validator";
 import passport from "passport";
 import { Request, Response } from "express";
 
+import bcrypt from "bcryptjs";
+
 import "../config/passport";
 import { User, UserDocument } from "../models/User";
 import { IVerifyOptions } from "passport-local";
@@ -28,14 +30,21 @@ export const postLogin = async (
         res.status(401);
         return res.json({
             success: false,
-            error: errors.array().toString(),
+            error: errors.array(),
         });
     }
 
     passport.authenticate(
         "local",
         (err: Error, user: UserDocument, info: IVerifyOptions) => {
-            if (err || !user) {
+            if (err) {
+                res.status(401);
+                return res.json({
+                    success: false,
+                    error: "Login failed",
+                });
+            }
+            if (!user) {
                 res.status(401);
                 return res.json({
                     success: false,
@@ -65,6 +74,7 @@ export const postSignup = async (
     await check("confirmPassword", "Passwords do not match")
         .equals(req.body.password)
         .run(req);
+
     await body("email").normalizeEmail({ gmail_remove_dots: false }).run(req);
 
     const errors = validationResult(req);
@@ -73,13 +83,16 @@ export const postSignup = async (
         res.status(401);
         return res.json({
             success: false,
-            error: errors.array().toString(),
+            error: errors.array(),
         });
     }
 
+    const salt = await bcrypt.genSalt(10);
+    const hashPassword = await bcrypt.hash(req.body.password, salt);
+
     const user = new User({
         email: req.body.email,
-        password: req.body.password,
+        password: hashPassword,
         username: req.body.username,
         phone: req.body.phone,
         role: ROLES.Submitter,

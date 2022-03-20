@@ -5,15 +5,15 @@ import { ImAttachment } from "react-icons/im";
 import "./OptionInput.css";
 
 function OptionInput(props) {
-    const { label } = props;
+    const { label, noOptions } = props;
 
     return (
         <div className={"option-input-wrapper"}>
             <p>{label}</p>
             <div className="inputs">
                 <input type="text" placeholder={"Enter question statement"} />
-                <FaCheck className={"option-tick"} />
-                <ImAttachment className={"option-attach"} />
+                {!noOptions && <FaCheck className={"option-tick"} />}
+                {!noOptions && <ImAttachment className={"option-attach"} />}
             </div>
         </div>
     );
