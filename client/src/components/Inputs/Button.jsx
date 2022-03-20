@@ -6,6 +6,7 @@ function Button(props) {
     return (
         <button
             className={`input-btn${full ? " full" : ""}${alt ? " alt" : ""}`}
+            {...props}
         >
             {label}
             {icon}
