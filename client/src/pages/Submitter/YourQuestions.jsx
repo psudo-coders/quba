@@ -25,7 +25,7 @@ function YourQuestions(props) {
                     />
                 </TableHead>
                 <TableBody>
-                    {[0, 0, 0, 0, 0].map((property) => (
+                    {[0, 0, 0, 0, 0].map(() => (
                         <TableRow
                             values={[
                                 <>
