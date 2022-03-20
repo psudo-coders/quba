@@ -1,16 +1,11 @@
 import React from "react";
-import {
-    BrowserRouter as Router,
-    Route,
-    Routes,
-    useMatch,
-} from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import SubmitQuestion from "./SubmitQuestion";
 import { FaPlus } from "react-icons/fa";
 
 import "./Submitter.css";
 import YourQuestions from "./YourQuestions";
-import ViewQuestionPopup from "./ViewQuestionPopup";
+import Profile from "./Profile/Profile";
 
 const sidebarOptions = [
     {
@@ -27,17 +22,17 @@ const sidebarOptions = [
 
 function Submitter(props) {
     return (
-        <>
-            <ViewQuestionPopup />
-            {/*<Route*/}
-            {/*    path="/submitter"*/}
-            {/*    element={<SubmitQuestion sidebarOptions={sidebarOptions} />}*/}
-            {/*/>*/}
-            {/*<Route*/}
-            {/*    path="myquestions"*/}
-            {/*    element={<YourQuestions sidebarOptions={sidebarOptions} />}*/}
-            {/*/>*/}
-        </>
+        <Routes>
+            <Route
+                path=""
+                element={<SubmitQuestion sidebarOptions={sidebarOptions} />}
+            />
+            <Route
+                path="myquestions"
+                element={<YourQuestions sidebarOptions={sidebarOptions} />}
+            />
+            <Route path="profile" element={<Profile />} />
+        </Routes>
     );
 }
 

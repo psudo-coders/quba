@@ -3,17 +3,17 @@ import Popup from "../../components/Popup/Popup";
 import AttachTextArea from "../../components/AttachTextArea/AttachTextArea";
 import OptionInput from "../../components/OptionInputs/OptionInput";
 
-function ViewQuestionPopup(props) {
+function ViewQuestionPopup({ setOpen }) {
     return (
-        <Popup>
+        <Popup setOpen={setOpen}>
             <div className={"submit-question-form"}>
                 <AttachTextArea
                     heading={"View Question (#QID)"}
                     placeholder={"Question statement"}
                     noAttach
                 />
-                {["A", "B", "C", "D"].map((option) => (
-                    <OptionInput label={option} noOptions />
+                {["A", "B", "C", "D"].map((option, i) => (
+                    <OptionInput key={i} label={option} noOptions />
                 ))}
                 <AttachTextArea
                     heading={"Enter solution details"}

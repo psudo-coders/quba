@@ -10,6 +10,7 @@ import Button from "../../components/Inputs/Button";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import SearchBar from "../../components/SearchBar/SearchBar";
 import Dropdown from "../../components/Dropdown/Dropdown";
+import ViewQuestionPopup from "./ViewQuestionPopup";
 
 function YourQuestions(props) {
     const { sidebarOptions } = props;
@@ -17,6 +18,12 @@ function YourQuestions(props) {
     const [selectedStatus, setSelectedStatus] = useState(-1);
 
     const statusOptions = ["Option 1", "Option 2"];
+
+    const [popupOpen, setPopupOpen] = useState(false);
+
+    const handleQuestionClick = () => {
+        setPopupOpen(true);
+    };
 
     return (
         <Page
@@ -40,8 +47,10 @@ function YourQuestions(props) {
                     />
                 </TableHead>
                 <TableBody>
-                    {[0, 0, 0, 0, 0].map(() => (
+                    {[0, 0, 0, 0, 0].map((v, i) => (
                         <TableRow
+                            key={i}
+                            onClick={handleQuestionClick}
                             values={[
                                 <>
                                     <FiFile />
@@ -65,6 +74,7 @@ function YourQuestions(props) {
                 <Button label={"Prev"} icon={<FaArrowLeft />} alt />
                 <Button label={"Next"} icon={<FaArrowRight />} alt />
             </div>
+            {popupOpen && <ViewQuestionPopup setOpen={setPopupOpen} />}
         </Page>
     );
 }
