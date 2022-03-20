@@ -62,8 +62,8 @@ mongoose
  * Primary app routes
  */
 app.get("/", isAuthenticated, isAuthorized(ROLES.Admin), homeController.index);
-app.post("/login", userController.postLogin);
-app.post("/signup", userController.postSignup);
+app.post("/api/login", userController.postLogin);
+app.post("/api/signup", userController.postSignup);
 app.use("/api/question", isAuthenticated, questions);
 app.use("/api/subject", isAuthenticated, subject);
 app.use("/api/topic", isAuthenticated, topic);
