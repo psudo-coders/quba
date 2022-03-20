@@ -29,7 +29,6 @@ export const postLogin = async (
     if (!errors.isEmpty()) {
         res.status(401);
         return res.json({
-            success: false,
             error: errors.array(),
         });
     }
@@ -47,13 +46,11 @@ export const postLogin = async (
             if (!user) {
                 res.status(401);
                 return res.json({
-                    success: false,
                     error: info.message,
                 });
             }
             req.logIn(user, () => {
-                res.status(200);
-                return res.json({ success: true, user });
+                return res.json({ id: user._id });
             });
         }
     )(req, res);
@@ -80,9 +77,8 @@ export const postSignup = async (
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
-        res.status(401);
+        res.status(400);
         return res.json({
-            success: false,
             error: errors.array(),
         });
     }
@@ -104,14 +100,12 @@ export const postSignup = async (
             if (err) {
                 res.status(401);
                 return res.json({
-                    success: false,
                     error: "Signup Failed",
                 });
             }
             if (existingUser) {
                 res.status(401);
                 return res.json({
-                    success: false,
                     error: "Account with that email address already exists.",
                 });
             }
@@ -119,7 +113,6 @@ export const postSignup = async (
                 if (err) {
                     res.status(401);
                     return res.json({
-                        success: false,
                         error: "Signup Failed",
                     });
                 }
@@ -127,12 +120,10 @@ export const postSignup = async (
                     if (err) {
                         res.status(401);
                         return res.json({
-                            success: false,
                             error: "Signup Failed",
                         });
                     }
-                    res.status(200);
-                    return res.json({ success: true, user });
+                    return res.json({ id: user._id });
                 });
             });
         }
