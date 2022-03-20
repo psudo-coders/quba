@@ -99,6 +99,7 @@ export const postSignup = async (
         (err: mongoose.NativeError, existingUser: UserDocument) => {
             if (err) {
                 res.status(401);
+                console.log(err);
                 return res.json({
                     error: "Signup Failed",
                 });
@@ -111,6 +112,7 @@ export const postSignup = async (
             }
             user.save((err) => {
                 if (err) {
+                    console.log(err);
                     res.status(401);
                     return res.json({
                         error: "Signup Failed",
