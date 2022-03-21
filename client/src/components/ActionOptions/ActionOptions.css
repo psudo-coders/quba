@@ -1,0 +1,25 @@
+.action-options-container {
+    position: relative;
+}
+
+.action-options {
+    position: absolute;
+    background: #EAF0FD;
+    border: 1px solid #A1A4AE;
+    box-sizing: border-box;
+    border-radius: 10px;
+    padding: 5px 20px;
+    z-index: 1;
+
+}
+
+.action:hover {
+    color: #55586C;
+}
+
+.action {
+    display: flex;
+    margin: 10px 0;
+    font-size: 14px;
+    color: #7C7F8E;
+}
