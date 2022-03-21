@@ -4,6 +4,7 @@ import Button from "../Inputs/Button";
 import SidebarOption from "./SidebarOption";
 
 import "./Sidebar.css";
+import { useNavigate } from "react-router-dom";
 
 const footerOptions = [
     {
@@ -18,6 +19,7 @@ const footerOptions = [
 
 function Sidebar(props) {
     const { options, selected } = props;
+    const goto = useNavigate();
 
     return (
         <div className={"sidebar"}>
@@ -30,17 +32,21 @@ function Sidebar(props) {
                             key={i}
                             label={hOption.label}
                             icon={hOption.icon}
+                            onClick={() => goto(hOption.link)}
                         />
                     ))}
             </div>
             <div className="sidebar-options">
-                {options.map((option, i) => (
-                    <SidebarOption
-                        key={i}
-                        label={option.label}
-                        isSelected={selected === i}
-                    />
-                ))}
+                {options
+                    .filter(o => !o.highlighted)
+                    .map((option, i) => (
+                        <SidebarOption
+                            key={i}
+                            label={option.label}
+                            isSelected={selected === i}
+                            link={option.link}
+                        />
+                    ))}
             </div>
 
             <div className="sidebar-options sidebar-footer-opts">
@@ -49,6 +55,7 @@ function Sidebar(props) {
                         key={i}
                         label={option.label}
                         isSelected={selected === i}
+                        link={option.link}
                     />
                 ))}
             </div>
