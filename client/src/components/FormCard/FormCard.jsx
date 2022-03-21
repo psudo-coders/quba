@@ -7,7 +7,7 @@ function FormCard(props) {
     const { heading, footerLinks } = props;
 
     return (
-        <div className={"form-card"}>
+        <form className={"form-card"} {...props}>
             <h1>{heading}</h1>
             <div className="form-card-inputs">{props.children}</div>
             <div className="form-card-footer">
@@ -15,7 +15,7 @@ function FormCard(props) {
                     <FooterLink key={i} {...ftLink} />
                 ))}
             </div>
-        </div>
+        </form>
     );
 }
 
