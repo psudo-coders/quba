@@ -46,4 +46,12 @@ function post(url) {
 
 export const login = post('/api/login');
 export const signup = post('/api/signup');
+export const userInfo = get('/api/userInfo');
+export const logout = post('/api/logout');
+
+export const Roles = {
+    ADMIN: 0,
+    REVIEWER: 1,
+    SUBMITTER: 2,
+};
 // TODO: add other api calls when needed

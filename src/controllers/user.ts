@@ -131,3 +131,12 @@ export const postSignup = async (
         }
     );
 };
+
+export const userLogout = (req: Request, res: Response) => {
+    req.logout();
+    res.sendStatus(200);
+};
+
+export const userInfo = (req: Request, res: Response) => {
+    res.json(req.user);
+};

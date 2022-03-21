@@ -64,6 +64,9 @@ mongoose
 app.get("/", isAuthenticated, isAuthorized(ROLES.Admin), homeController.index);
 app.post("/api/login", userController.postLogin);
 app.post("/api/signup", userController.postSignup);
+app.post("/api/logout", userController.userLogout);
+app.get("/api/userInfo", isAuthenticated, userController.userInfo);
+
 app.use("/api/question", isAuthenticated, questions);
 app.use("/api/subject", isAuthenticated, subject);
 app.use("/api/topic", isAuthenticated, topic);
