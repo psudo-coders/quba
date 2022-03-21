@@ -12,11 +12,11 @@ const sidebarOptions = [
         label: "Submit Question",
         highlighted: true,
         icon: <FaPlus />,
-        link: "",
+        link: "/submitter",
     },
     {
         label: "Your Questions",
-        link: "",
+        link: "/submitter/myquestions",
     },
 ];
 
