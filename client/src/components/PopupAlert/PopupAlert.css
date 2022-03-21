@@ -1,0 +1,29 @@
+.popup-alert-content {
+    text-align: center;
+}
+
+.popup-alert-content h1 {
+    color: #55586C;
+    font-weight: 500;
+    font-size: 20px;
+
+    margin: 0;
+}
+
+.popup-alert-content p {
+    margin-top: 18px;
+    font-size: 20px;
+    font-weight: 500
+}
+
+.popup-alert-content h6 {
+    font-weight: 500;
+    color: #55586C;
+
+    font-size: 14px;
+    margin-top: 18px;
+}
+
+.popup-alert-content svg {
+    font-size: 50px;
+}

@@ -6,7 +6,7 @@ import OptionInput from "../../components/OptionInputs/OptionInput";
 function ViewQuestionPopup({ setOpen }) {
     return (
         <Popup setOpen={setOpen}>
-            <div className={"submit-question-form"}>
+            <div className={"view-question"}>
                 <AttachTextArea
                     heading={"View Question (#QID)"}
                     placeholder={"Question statement"}
