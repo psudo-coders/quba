@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom";
 const footerLinks = [
     {
         label: "Already have an account? Log in",
-        link: "/signup",
+        link: "/login",
     },
 ];
 
