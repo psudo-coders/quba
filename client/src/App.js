@@ -8,6 +8,9 @@ import Login from "./pages/Login/Login";
 import Signup from "./pages/Signup/Signup";
 import Submitter from "./pages/Submitter/Submitter";
 import Reviewer from "./pages/Reviewer/Reviewer";
+import { QueryClient, QueryClientProvider } from "react-query"
+
+const queryClient = new QueryClient();
 
 function App() {
     return (

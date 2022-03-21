@@ -63,8 +63,7 @@ export const isAuthenticated = (
     if (req.isAuthenticated()) {
         return next();
     }
-    res.status(401);
-    return res.json({ success: false, error: "Unauthorized. Please login" });
+    res.sendStatus(401);
 };
 
 /**
@@ -76,20 +75,12 @@ export const isAuthorized =
         const user = req.user as UserDocument;
 
         if (!user) {
-            res.status(401);
-            return res.json({
-                success: false,
-                error: "Unauthorized. Please login",
-            });
+            res.sendStatus(401);
         }
 
         const hasRole = roles.find((role) => user.role === role);
         if (!hasRole) {
-            res.status(401);
-            return res.json({
-                success: false,
-                error: "Unauthorized role access",
-            });
+            res.sendStatus(403);
         }
 
         return next();

@@ -34,4 +34,11 @@
     background: #FFF;
 
     margin: 20px 0;
+
+.add-ts-container > div, .add-ts-container .input {
+    margin-bottom: 20px;
+}
+
+.add-ts-container .dropdown {
+    width: 250px;
 }
