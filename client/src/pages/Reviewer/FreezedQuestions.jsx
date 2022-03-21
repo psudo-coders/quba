@@ -10,7 +10,6 @@ import TableBody from "../../components/Table/TableBody";
 import TableRow from "../../components/Table/TableRow";
 import { FiFile } from "react-icons/fi";
 import { BsThreeDots } from "react-icons/bs";
-import FreezeQuestionPopup from "./FreezeQuestionPopup";
 import RemoveQuestionPopup from "./RemoveQuestionPopup";
 
 function FreezedQuestions(props) {
@@ -25,7 +24,7 @@ function FreezedQuestions(props) {
     return (
         <Page
             sidebarOptions={sidebarOptions}
-            heading={"Review Questions"}
+            heading={"View Freezed Questions"}
             subHeading={"Your question description"}
             search={<SearchBar placeholder={"Search Question"} />}
             // dropdowns={
