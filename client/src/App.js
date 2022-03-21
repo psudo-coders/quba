@@ -15,15 +15,17 @@ const queryClient = new QueryClient();
 function App() {
     return (
         <div className="App">
-            <Router>
-                <Routes>
-                    <Route path="/" exact element={<Home />} />
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/signup" element={<Signup />} />
-                    <Route path="/submitter/*" element={<Submitter />} />
-                    <Route path="/reviewer/*" element={<Reviewer />} />
-                </Routes>
-            </Router>
+            <QueryClientProvider client={queryClient}>
+                <Router>
+                    <Routes>
+                        <Route path="/" exact element={<Home />} />
+                        <Route path="/login" element={<Login />} />
+                        <Route path="/signup" element={<Signup />} />
+                        <Route path="/submitter/*" element={<Submitter />} />
+                        <Route path="/reviewer/*" element={<Reviewer />} />
+                    </Routes>
+                </Router>
+            </QueryClientProvider>
         </div>
     );
 }
