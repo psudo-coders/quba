@@ -1,10 +1,15 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
+import { FaCheck } from "react-icons/fa";
+
+import "./Reviewer.css";
+import ReviewQuestions from "./ReviewQuestions";
+import GenerateQuestionPaper from "./GenerateQuestionPaper";
+
 import { FaPlus } from "react-icons/fa";
 import CreateTopic from "./Topics/CreateTopic";
 import ViewTopics from "./Topics/ViewTopics";
 
-import "./Reviewer.css";
 import CreateSubject from "./Subjects/CreateSubject";
 import ViewSubjects from "./Subjects/ViewSubjects";
 import { BsFillCheckSquareFill } from "react-icons/bs";
@@ -15,6 +20,11 @@ const sidebarOptions = [
     {
         label: "Review Questions",
         highlighted: true,
+        icon: <FaCheck />,
+        link: "",
+    },
+    {
+        label: "View Freezed Questions",
         icon: <BsFillCheckSquareFill />,
         link: "",
     },
@@ -24,6 +34,14 @@ const sidebarOptions = [
     },
     {
         label: "Generate Question Paper",
+        link: "",
+    },
+    {
+        label: "Create Subject",
+        link: "",
+    },
+    {
+        label: "Create Topic",
         link: "",
     },
     {
@@ -39,6 +57,16 @@ const sidebarOptions = [
 function Reviewer(props) {
     return (
         <Routes>
+            <Route
+                path=""
+                element={<ReviewQuestions sidebarOptions={sidebarOptions} />}
+            />
+            <Route
+                path="genquestionpaper"
+                element={
+                    <GenerateQuestionPaper sidebarOptions={sidebarOptions} />
+                }
+            />    
             <Route
                 path="/topic/create"
                 element={<CreateTopic sidebarOptions={sidebarOptions} />}

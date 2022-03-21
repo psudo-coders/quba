@@ -5,10 +5,17 @@ import TopBar from "../TopBar/TopBar";
 import "./Page.css";
 
 function Page(props) {
-    const { sidebarOptions, heading, subHeading, search, dropdowns } = props;
+    const {
+        className,
+        sidebarOptions,
+        heading,
+        subHeading,
+        search,
+        dropdowns,
+    } = props;
 
     return (
-        <div className={"page"}>
+        <div className={`page${className ? " " + className : ""}`}>
             <Sidebar options={sidebarOptions} />
             <div className="page-section">
                 <TopBar search={search && search} />

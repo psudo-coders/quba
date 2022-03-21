@@ -1,3 +1,40 @@
+.popup-alert-content svg.check-circle {
+    color: #2CCAA9;
+}
+
+.popup-alert-content svg.eraser {
+    color: cornflowerblue;
+}
+
+.generate-question-paper .page-content {
+    display: flex;
+}
+
+.generate-question-paper .page-content .section {
+    background: #F1F3F6;
+    padding: 28px 40px;
+
+    margin: 10px;
+
+    flex: 1;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.generate-question-paper .page-content .section h1 {
+    font-weight: 500;
+    font-size: 20px;
+
+    margin-top: 0;
+    text-align: center;
+}
+
+.generate-question-paper .page-content input {
+    background: #FFF;
+
+    margin: 20px 0;
+
 .add-ts-container > div, .add-ts-container .input {
     margin-bottom: 20px;
 }

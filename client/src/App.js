@@ -11,6 +11,7 @@ import Reviewer from "./pages/Reviewer/Reviewer";
 import { QueryClient, QueryClientProvider } from "react-query"
 
 const queryClient = new QueryClient();
+
 function App() {
     return (
         <div className="App">

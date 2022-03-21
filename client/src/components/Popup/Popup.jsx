@@ -5,7 +5,7 @@ import { FaTimesCircle } from "react-icons/fa";
 import "./Popup.css";
 
 function Popup(props) {
-    const { heading, subheading, onClose, setOpen } = props;
+    const { className, heading, subheading, onClose, setOpen } = props;
 
     const handleCloseClick = () => {
         onClose && onClose();
@@ -13,15 +13,13 @@ function Popup(props) {
     };
 
     return ReactDOM.createPortal(
-        <div className="popup-overlay">
+        <div className={`popup-overlay${className ? " " + className : ""}`}>
             <div className="popup">
                 <div className="popup-header">
                     <div className="popup-headings">
-                        {heading && (
-                            <div className="popup-heading">{heading}</div>
-                        )}
+                        {heading && <p className="popup-heading">{heading}</p>}
                         {subheading && (
-                            <div className="popup-subheading">{subheading}</div>
+                            <p className="popup-subheading">{subheading}</p>
                         )}
                     </div>
                     {(setOpen || onClose) && (
