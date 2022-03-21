@@ -1,26 +1,22 @@
 import React from "react";
-import { useNavigate } from "react-router";
+import { useNavigate, Navigate } from "react-router";
 import { useMutation, useQuery } from "react-query";
 import { Roles, userInfo } from "../../api";
 
 function Home(props) {
-    const { data, isLoading, isError, mutateAsync, isIdle } = useMutation(userInfo);
-    if (isIdle) {
-        mutateAsync();
+    const { data, isLoading, isError } = useQuery("userInfo", userInfo, { retry: false });
+
+    if (isError) return <Navigate to="/login" />;
+    // TODO(luckshya): styling
+    if (isLoading) return <div className="blue-screen"></div>;
+    switch (data.role) {
+        case Roles.ADMIN:
+            return <Navigate to="/admin" />;
+        case Roles.SUBMITTER:
+            return <Navigate to="/submitter" />;
+        case Roles.REVIEWER:
+            return <Navigate to="/reviewer" />;
     }
-    const goto = useNavigate();
-    if (isError) goto("/login");
-    else if (!isLoading && data != undefined) {
-        switch (data.role) {
-            case Roles.ADMIN:
-                goto("/admin");
-            case Roles.REVIEWER:
-                goto("/reviewer");
-            case Roles.SUBMITTER:
-                goto("/submitter");
-        }
-    }
-    return <div>Loading...</div>;
 
 }
 
