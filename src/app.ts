@@ -1,4 +1,3 @@
-require("dotenv").config();
 
 import express, { Request, Response } from "express";
 import session from "express-session";
@@ -11,7 +10,7 @@ import mongoose from "mongoose";
 // Controllers (route handlers)
 import * as homeController from "./controllers/home";
 import * as userController from "./controllers/user";
-import image from "./controllers/image";
+
 import questions from "./controllers/question";
 import subject from "./controllers/subject";
 import topic from "./controllers/topic";
@@ -43,7 +42,7 @@ app.use(
 );
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(require("express-formidable")());
+
 
 // Connect to MongoDB
 const mongoUrl = "mongodb://127.0.0.1:27017/quba";
@@ -75,8 +74,8 @@ app.use("/api/question", isAuthenticated, questions);
 app.use("/api/subject", isAuthenticated, subject);
 app.use("/api/topic", isAuthenticated, topic);
 app.use("/api/test", isAuthenticated, test);
-// TODO: auth here
-app.post("/api/uploadImage", image);
+
+
 
 // All other GET requests not handled before will return our React app
 app.get("*", (req: Request, res: Response): void => {
