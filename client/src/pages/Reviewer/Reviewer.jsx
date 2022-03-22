@@ -16,10 +16,10 @@ import { BsFillCheckSquareFill } from "react-icons/bs";
 import EditSubject from "./Subjects/EditSubject";
 import EditTopic from "./Topics/EditTopic";
 import FreezedQuestions from "./FreezedQuestions";
-import Profile from "../Submitter/Profile/Profile";
+import Profile from "./Profile/Profile";
 import EditQuestion from "./EditQuestion";
 
-const sidebarOptions = [
+export const sidebarOptions = [
     {
         label: "Review Questions",
         highlighted: true,

@@ -14,6 +14,7 @@ import {
 } from "chart.js";
 import { Bar, Pie } from "react-chartjs-2";
 import ProfileInfo from "../../../components/ProfileInfo/ProfileInfo";
+import { sidebarOptions } from "../Reviewer"
 ChartJS.register(
     CategoryScale,
     LinearScale,
@@ -25,19 +26,6 @@ ChartJS.register(
 );
 
 function Profile(props) {
-    const sidebarOptions = [
-        {
-            label: "Submit Question",
-            highlighted: true,
-            icon: <FaPlus />,
-            link: "/submitter",
-        },
-        {
-            label: "Your Questions",
-            link: "/reviewer",
-        },
-    ];
-
     const subjectData = {
         labels: [
             "Maths",
