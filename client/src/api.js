@@ -2,7 +2,7 @@ function get(url) {
     return async (data) => {
         const urlWithParams = new URL(url, window.location.href);
 
-        for(const [key, value] of Object.entries(data)) {
+        for(const [key, value] of Object.entries(data || {})) {
             urlWithParams.searchParams.append(key, value);
         }
 
