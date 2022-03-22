@@ -11,10 +11,11 @@ import ViewTopics from "./Topics/ViewTopics";
 
 import CreateSubject from "./Subjects/CreateSubject";
 import ViewSubjects from "./Subjects/ViewSubjects";
-import { BsFillCheckSquareFill } from "react-icons/bs";
 import EditSubject from "./Subjects/EditSubject";
 import EditTopic from "./Topics/EditTopic";
 import FreezedQuestions from "./FreezedQuestions";
+import Profile from "../Reviewer/Profile/Profile";
+import EditQuestion from "./EditQuestion";
 
 const sidebarOptions = [
     {
@@ -25,11 +26,6 @@ const sidebarOptions = [
     },
     {
         label: "View Freezed Questions",
-        icon: <BsFillCheckSquareFill />,
-        link: "",
-    },
-    {
-        label: "View Freezed Question",
         link: "",
     },
     {
@@ -62,14 +58,18 @@ function Reviewer(props) {
                 element={<ReviewQuestions sidebarOptions={sidebarOptions} />}
             />
             <Route
-                path="freezedquestions"
+                path="/question/freezed"
                 element={<FreezedQuestions sidebarOptions={sidebarOptions} />}
             />
             <Route
-                path="genquestionpaper"
+                path="/question/generate"
                 element={
                     <GenerateQuestionPaper sidebarOptions={sidebarOptions} />
                 }
+            />
+            <Route
+                path="/question/edit"
+                element={<EditQuestion sidebarOptions={sidebarOptions} />}
             />
             <Route
                 path="/topic/create"
@@ -95,6 +95,7 @@ function Reviewer(props) {
                 path="/subject/view"
                 element={<ViewSubjects sidebarOptions={sidebarOptions} />}
             />
+            <Route path="/profile" element={<Profile />} />
         </Routes>
     );
 }
