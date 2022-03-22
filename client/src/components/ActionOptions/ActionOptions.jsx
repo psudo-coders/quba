@@ -19,17 +19,17 @@ function ActionOptions(props) {
             {open && (
                 <div className={"action-options"}>
                     {onEdit && (
-                        <div className={"action"}>
+                        <div className={"action"} onClick={onEdit}>
                             <AiFillEdit color={"blue"} size={20} /> Edit
                         </div>
                     )}
                     {onFreeze && (
-                        <div className={"action"}>
+                        <div className={"action"} onClick={onFreeze}>
                             <BsNodePlusFill color={"green"} size={20} /> Freeze
                         </div>
                     )}
-                    {onRemove && (
-                        <div className={"action"}>
+                    {onFreeze && (
+                        <div className={"action"} onClick={onFreeze}>
                             <AiFillMinusCircle color={"red"} size={20} /> Remove
                         </div>
                     )}
