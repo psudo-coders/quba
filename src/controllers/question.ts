@@ -13,7 +13,7 @@ async function create(req: Request, res: Response) {
     req.body.subject = new mongoose.Types.ObjectId(req.body.subject);
     req.body.topic = new mongoose.Types.ObjectId(req.body.topic);
     const question = new Question({
-        status: "freeze",
+        status: "pending",
         ...req.body,
         author: user._id,
     });
