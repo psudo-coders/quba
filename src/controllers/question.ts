@@ -80,6 +80,13 @@ async function remove(req: Request, res: Response) {
     res.sendStatus(200);
 }
 
+
+async function toReview(_req: Request, res: Response) {
+    const questions = await Question.find({ status: "pending" }).sort({ createdAt: 1 });
+    // TODO: try avoid more than one review per question collision
+    res.json(questions);
+}
+
 export default Router()
     .post(
         "/create",
@@ -96,4 +103,10 @@ export default Router()
         "/remove",
         isAuthorized(ROLES.Admin, ROLES.Reviewer),
         handleError(remove)
+    )
+    // Question for you to review
+    .get(
+        "/toReview",
+        isAuthorized(ROLES.Admin, ROLES.Reviewer),
+        handleError(toReview)
     );
