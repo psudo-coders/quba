@@ -1,0 +1,29 @@
+/* TODO: soon [tm] style this file */
+.question-paper {
+    overflow-x: hidden;
+}
+
+.question-paper-body {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.question {
+    max-width: 90%;
+}
+
+.question-header {
+}
+
+.options {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.option {
+    width: 50%;
+}
+
