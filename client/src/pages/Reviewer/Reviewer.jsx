@@ -15,6 +15,7 @@ import { BsFillCheckSquareFill } from "react-icons/bs";
 import EditSubject from "./Subjects/EditSubject";
 import EditTopic from "./Topics/EditTopic";
 import FreezedQuestions from "./FreezedQuestions";
+import Profile from "../Submitter/Profile/Profile";
 
 const sidebarOptions = [
     {
@@ -91,6 +92,7 @@ function Reviewer(props) {
                 path="/subject/view"
                 element={<ViewSubjects sidebarOptions={sidebarOptions} />}
             />
+            <Route path="/profile" element={<Profile />} />
         </Routes>
     );
 }
