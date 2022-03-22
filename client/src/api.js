@@ -13,6 +13,7 @@ function get(url) {
         if (resp.ok) {
             return resp.json();
         }
+        checkSessionExpired(resp);
         const text = await resp.text();
         try {
             const json = JSON.parse(text);
@@ -36,12 +37,21 @@ function post(url) {
         if (resp.ok) {
             return resp.json();
         }
+        checkSessionExpired(resp);
         const text = await resp.text();
         try {
             const json = JSON.parse(text);
             throw new Error(json.error);
         } catch (e) {
             throw new Error(text);
+        }
+    }
+}
+
+function checkSessionExpired(resp) {
+    if (resp.status == 401) {
+        if (window.location.pathname != '/login') {
+            window.location.href = '/login';
         }
     }
 }
