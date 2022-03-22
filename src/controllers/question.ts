@@ -1,11 +1,13 @@
 import { Request, Response, Router } from "express";
-import { Question } from "../models/Question";
+import { Question, QuestionDocument } from "../models/Question";
 import { handleError } from "./util";
 import { logActivity } from "./activityLog";
 import { UserDocument } from "../models/User";
 import { isAuthorized } from "../config/passport";
 import { ROLES } from "../util/roles";
 import mongoose from "mongoose";
+import { Subject } from "../models/Subject";
+import { Topic } from "../models/Topic";
 
 async function create(req: Request, res: Response) {
     // TODO: handle attachments
@@ -39,13 +41,13 @@ async function info(req: Request, res: Response) {
 async function list(req: Request, res: Response) {
     if ((req.user as UserDocument).role === ROLES.Admin) {
         const questions = await Question.find().exec();
-        res.json(questions);
+        res.json(await Promise.all(questions.map(preprocessQuestion)));
     } else {
         // find questions of the user
         const questions = await Question.find({
             user: (req.user as UserDocument)._id,
         }).exec();
-        res.json(questions);
+        res.json(await Promise.all(questions.map(preprocessQuestion)));
     }
 }
 
@@ -80,11 +82,25 @@ async function remove(req: Request, res: Response) {
     res.sendStatus(200);
 }
 
+// TODO: types go brr
+async function preprocessQuestion(question: QuestionDocument): Promise<any> {
+    const { subject, topic } = question;
+
+    const subject_val = await Subject.findById(subject);
+    const topic_val = await Topic.findById(topic);
+
+    return {
+        ...question.toObject(),
+        subject: subject_val.name,
+        topic: topic_val.name,
+    }
+
+}
 
 async function toReview(_req: Request, res: Response) {
     const questions = await Question.find({ status: "pending" }).sort({ createdAt: 1 });
     // TODO: try avoid more than one review per question collision
-    res.json(questions);
+    res.json(await Promise.all(questions.map(preprocessQuestion)));
 }
 
 export default Router()
