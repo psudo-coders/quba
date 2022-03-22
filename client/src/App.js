@@ -10,21 +10,34 @@ import Submitter from "./pages/Submitter/Submitter";
 import Reviewer from "./pages/Reviewer/Reviewer";
 import { QueryClient, QueryClientProvider } from "react-query";
 
+import { UserContext } from "./context/UserContext";
+import React, { useState } from "react";
+
+import UserDataUpdate from "./components/UserDataUpdate/UserDataUpdate";
+
 const queryClient = new QueryClient();
 
 function App() {
+    const [userData, setUserData] = useState(null);
+
     return (
         <div className="App">
             <QueryClientProvider client={queryClient}>
-                <Router>
-                    <Routes>
-                        <Route path="/" exact element={<Home />} />
-                        <Route path="/login" element={<Login />} />
-                        <Route path="/signup" element={<Signup />} />
-                        <Route path="/submitter/*" element={<Submitter />} />
-                        <Route path="/reviewer/*" element={<Reviewer />} />
-                    </Routes>
-                </Router>
+                <UserContext.Provider value={[userData, setUserData]}>
+                    <UserDataUpdate />
+                    <Router>
+                        <Routes>
+                            <Route path="/" exact element={<Home />} />
+                            <Route path="/login" element={<Login />} />
+                            <Route path="/signup" element={<Signup />} />
+                            <Route
+                                path="/submitter/*"
+                                element={<Submitter />}
+                            />
+                            <Route path="/reviewer/*" element={<Reviewer />} />
+                        </Routes>
+                    </Router>
+                </UserContext.Provider>
             </QueryClientProvider>
         </div>
     );

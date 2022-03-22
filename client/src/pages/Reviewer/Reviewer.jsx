@@ -11,42 +11,43 @@ import ViewTopics from "./Topics/ViewTopics";
 
 import CreateSubject from "./Subjects/CreateSubject";
 import ViewSubjects from "./Subjects/ViewSubjects";
+import { BsFillCheckSquareFill } from "react-icons/bs";
 import EditSubject from "./Subjects/EditSubject";
 import EditTopic from "./Topics/EditTopic";
 import FreezedQuestions from "./FreezedQuestions";
-import Profile from "../Reviewer/Profile/Profile";
-import EditQuestion from "./EditQuestion";
+import Profile from "../Submitter/Profile/Profile";
 
 const sidebarOptions = [
     {
         label: "Review Questions",
         highlighted: true,
         icon: <FaCheck />,
-        link: "",
+        link: "/reviewer",
     },
     {
         label: "View Freezed Questions",
-        link: "",
+        icon: <BsFillCheckSquareFill />,
+        link: "/reviewer/question/freezed",
     },
     {
         label: "Generate Question Paper",
-        link: "",
+        link: "/reviewer/question/generate",
     },
     {
         label: "Create Subject",
-        link: "",
+        link: "/reviewer/subject/create",
     },
     {
         label: "Create Topic",
-        link: "",
+        link: "/reviewer/topic/create",
     },
     {
         label: "View Subjects",
-        link: "",
+        link: "/reviewer/subject/view",
     },
     {
         label: "View Topics",
-        link: "",
+        link: "/reviewer/topic/view",
     },
 ];
 
@@ -66,10 +67,6 @@ function Reviewer(props) {
                 element={
                     <GenerateQuestionPaper sidebarOptions={sidebarOptions} />
                 }
-            />
-            <Route
-                path="/question/edit"
-                element={<EditQuestion sidebarOptions={sidebarOptions} />}
             />
             <Route
                 path="/topic/create"

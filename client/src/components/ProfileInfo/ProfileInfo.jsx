@@ -1,21 +1,24 @@
 import React from "react";
+import { UserContext } from "../../context/UserContext";
 
 import "./ProfileInfo.css";
 
 function ProfileInfo(props) {
+    const [userData] = React.useContext(UserContext);
+
     return (
         <div className={"profile-info-container"}>
             <p>
                 <span>Name: </span>
-                Lovesh Verma
+                {userData?.username}
             </p>
             <p>
                 <span>Email: </span>
-                vermalovesh2002@gmail.com
+                {userData?.email}
             </p>
             <p>
                 <span>Phone: </span>
-                9729466778
+                {userData?.phone}
             </p>
         </div>
     );

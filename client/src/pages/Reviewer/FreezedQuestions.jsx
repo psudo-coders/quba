@@ -9,9 +9,9 @@ import TableHeadRow from "../../components/Table/TableHeadRow";
 import TableBody from "../../components/Table/TableBody";
 import TableRow from "../../components/Table/TableRow";
 import { FiFile } from "react-icons/fi";
-import { BsThreeDots } from "react-icons/bs";
 import RemoveQuestionPopup from "./RemoveQuestionPopup";
 import Dropdown from "../../components/Dropdown/Dropdown";
+import ActionOptions from "../../components/ActionOptions/ActionOptions";
 
 function FreezedQuestions(props) {
     const { sidebarOptions } = props;
@@ -22,9 +22,15 @@ function FreezedQuestions(props) {
     const [subject, setSubject] = useState(-1);
     const [difficulty, setDifficulty] = useState(-1);
 
+    const [removePopupOpen, setRemovePopupOpen] = useState(false);
+
     const handleQuestionClick = () => {
         setPopupOpen(true);
     };
+
+    const onEdit = () => {};
+
+    const onRemove = () => {};
 
     return (
         <Page
@@ -73,7 +79,10 @@ function FreezedQuestions(props) {
                                 </>,
                                 "English",
                                 "Grammar",
-                                <BsThreeDots />,
+                                <ActionOptions
+                                    onEdit={onEdit}
+                                    onRemove={onRemove}
+                                />,
                             ]}
                         />
                     ))}
@@ -83,8 +92,8 @@ function FreezedQuestions(props) {
                 <Button label={"Prev"} icon={<FaArrowLeft />} alt />
                 <Button label={"Next"} icon={<FaArrowRight />} alt />
             </div>
-            {popupOpen && (
-                <RemoveQuestionPopup setOpen={setPopupOpen} complete />
+            {removePopupOpen && (
+                <RemoveQuestionPopup setOpen={setRemovePopupOpen} />
             )}
         </Page>
     );

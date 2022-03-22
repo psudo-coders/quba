@@ -15,11 +15,11 @@ function Profile(props) {
             label: "Submit Question",
             highlighted: true,
             icon: <FaPlus />,
-            link: "",
+            link: "/Submitter",
         },
         {
             label: "Your Questions",
-            link: "",
+            link: "/Submitter/questions",
         },
     ];
 

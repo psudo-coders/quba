@@ -13,7 +13,7 @@ function OptionInput(props) {
             <div className="inputs">
                 <input
                     type="text"
-                    placeholder={"Enter question statement"}
+                    placeholder={"Enter option"}
                     {...passingProps}
                 />
                 {!noOptions && <FaCheck className={"option-tick"} />}

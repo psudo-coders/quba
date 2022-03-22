@@ -4,6 +4,8 @@
     color: white;
 
     font-family: "Roboto", cursive;
+
+    cursor: pointer;
 }
 
 .logo.alt {
