@@ -8,6 +8,7 @@ import Logo from "../../components/Logo/Logo";
 import { login } from "../../api";
 
 const footerLinks = [
+    // TODO: forgot password
     /*
     {
         label: "Can’t login?",
@@ -29,7 +30,7 @@ function Login(props) {
         mutate: doLogin,
     } = useMutation(login, {
         onSuccess: () => {
-            goto("/submitter/profile");
+            goto("/");
         },
     });
 
