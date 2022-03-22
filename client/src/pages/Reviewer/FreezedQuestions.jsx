@@ -12,11 +12,10 @@ import { FiFile } from "react-icons/fi";
 import RemoveQuestionPopup from "./RemoveQuestionPopup";
 import Dropdown from "../../components/Dropdown/Dropdown";
 import ActionOptions from "../../components/ActionOptions/ActionOptions";
+import { useNavigate } from "react-router-dom";
 
 function FreezedQuestions(props) {
     const { sidebarOptions } = props;
-
-    const [popupOpen, setPopupOpen] = useState(false);
 
     const [status, setStatus] = useState(-1);
     const [subject, setSubject] = useState(-1);
@@ -24,13 +23,15 @@ function FreezedQuestions(props) {
 
     const [removePopupOpen, setRemovePopupOpen] = useState(false);
 
-    const handleQuestionClick = () => {
-        setPopupOpen(true);
+    const goto = useNavigate();
+
+    const onEdit = () => {
+        goto("/reviewer/question/edit");
     };
 
-    const onEdit = () => {};
-
-    const onRemove = () => {};
+    const onRemove = () => {
+        setRemovePopupOpen(true);
+    };
 
     return (
         <Page
@@ -71,7 +72,6 @@ function FreezedQuestions(props) {
                     {[0, 0, 0, 0, 0].map((v, i) => (
                         <TableRow
                             key={i}
-                            onClick={handleQuestionClick}
                             values={[
                                 <>
                                     <FiFile />

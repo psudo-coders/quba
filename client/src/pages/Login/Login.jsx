@@ -1,12 +1,11 @@
-import React from "react";
-import { useMutation } from "react-query"
+import React, { useContext } from "react";
+import { useMutation } from "react-query";
 import { useNavigate } from "react-router-dom";
 import FormCard from "../../components/FormCard/FormCard";
 import Input from "../../components/Inputs/Input";
 import Button from "../../components/Inputs/Button";
 import Logo from "../../components/Logo/Logo";
 import { login } from "../../api";
-
 
 const footerLinks = [
     /*
@@ -24,9 +23,13 @@ const footerLinks = [
 function Login(props) {
     const goto = useNavigate();
     // TODO: Show error + validations
-    const { isError, error, mutate: doLogin } = useMutation(login, {
+    const {
+        isError,
+        error,
+        mutate: doLogin,
+    } = useMutation(login, {
         onSuccess: () => {
-            goto("/Submitter/Profile");
+            goto("/submitter/profile");
         },
     });
 
@@ -36,14 +39,20 @@ function Login(props) {
             <FormCard
                 heading={"Login to your account"}
                 footerLinks={footerLinks}
-                onSubmit={event => {
+                onSubmit={(event) => {
                     event.preventDefault();
-                    doLogin(Object.fromEntries(new FormData(event.target).entries()));
+                    doLogin(
+                        Object.fromEntries(new FormData(event.target).entries())
+                    );
                 }}
-                isError = {isError ? isError : false}
+                isError={isError ? isError : false}
             >
                 <Input name="email" type="email" placeholder="Your email" />
-                <Input name="password" type="password" placeholder="Your password" />
+                <Input
+                    name="password"
+                    type="password"
+                    placeholder="Your password"
+                />
                 <Button label="Continue" type="submit" />
             </FormCard>
         </div>

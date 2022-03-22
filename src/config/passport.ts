@@ -7,8 +7,8 @@ import { ROLES } from "../util/roles";
 
 const LocalStrategy = passportLocal.Strategy;
 
-passport.serializeUser<any, any>((req, user, done) => {
-    done(undefined, user);
+passport.serializeUser<any, any>((req, user: UserDocument, done) => {
+    done(undefined, user._id);
 });
 
 passport.deserializeUser((id, done) => {

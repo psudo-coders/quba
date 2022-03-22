@@ -10,15 +10,20 @@ import TableBody from "../../../components/Table/TableBody";
 import TableRow from "../../../components/Table/TableRow";
 import { FiFile } from "react-icons/fi";
 import ActionOptions from "../../../components/ActionOptions/ActionOptions";
+import { useNavigate } from "react-router-dom";
 
 function ViewTopics(props) {
     const { sidebarOptions } = props;
 
     const handleTopicClick = () => {};
 
-    const onEdit = () => {};
+    const onEdit = () => {
+        goto("/reviewer/topic/edit");
+    };
 
     const onRemove = () => {};
+
+    const goto = useNavigate();
 
     return (
         <Page
@@ -26,7 +31,13 @@ function ViewTopics(props) {
             heading={"View Topics"}
             subHeading={"View topic description"}
             search={<SearchBar placeholder={"Search Topics"} />}
-            dropdowns={<Button label={"Add Topic"} icon={<FaPlus />} />}
+            dropdowns={
+                <Button
+                    label={"Add Topic"}
+                    icon={<FaPlus />}
+                    onClick={() => goto("/reviewer/topic/create")}
+                />
+            }
         >
             <Table>
                 <TableHead>
