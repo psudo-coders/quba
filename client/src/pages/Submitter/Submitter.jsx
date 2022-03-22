@@ -16,7 +16,7 @@ const sidebarOptions = [
     },
     {
         label: "Your Questions",
-        link: "/submitter/myquestions",
+        link: "/submitter/questions",
     },
 ];
 
