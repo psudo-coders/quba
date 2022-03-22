@@ -7,6 +7,7 @@ import Page from "../../components/Page/Page";
 import Dropdown from "../../components/Dropdown/Dropdown";
 import { useMutation } from "react-query";
 import PopupAlert from "../../components/PopupAlert/PopupAlert";
+import { questionCreate } from "../../api";
 
 const dummyData = {
     subjects: ["Subject 1", "Subject 2"],
@@ -38,22 +39,7 @@ function SubmitQuestion(props) {
     };
 
     const SubmitQuestion = useMutation(
-        (data) => {
-            console.log(qData);
-            return new Promise(async (resolve, reject) => {
-                let res = await fetch("/api/question/create", {
-                    method: "POST",
-                    credentials: "include",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify(data),
-                });
-                res = await res.json();
-                // if (!res.ok) reject(new Error(res.error));
-                resolve(res);
-            });
-        },
+        questionCreate,
         {
             onSuccess: () => {
                 console.log("success");

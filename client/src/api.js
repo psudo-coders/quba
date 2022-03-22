@@ -8,6 +8,7 @@ function get(url) {
 
         const resp = await fetch(urlWithParams, {
             method: 'GET',
+            credentials: 'include',
         });
         if (resp.ok) {
             return resp.json();
@@ -26,6 +27,7 @@ function post(url) {
     return async (data) => {
         const resp = await fetch(url, {
             method: 'POST',
+            credentials: 'include',
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -48,6 +50,7 @@ export const login = post('/api/login');
 export const signup = post('/api/signup');
 export const userInfo = get('/api/userInfo');
 export const logout = post('/api/logout');
+export const questionCreate = post('/api/question/create');
 
 export const Roles = {
     ADMIN: 0,
