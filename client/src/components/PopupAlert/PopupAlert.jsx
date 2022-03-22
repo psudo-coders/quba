@@ -11,9 +11,15 @@ function PopupAlert({
     bottom,
     footer,
     setOpen,
+    onClose,
 }) {
     return (
-        <Popup setOpen={setOpen} heading={heading} className={className}>
+        <Popup
+            setOpen={setOpen}
+            heading={heading}
+            className={className}
+            onClose={onClose}
+        >
             <div className={"popup-alert-content"}>
                 <h1>{top}</h1>
                 <p>{middle}</p>
