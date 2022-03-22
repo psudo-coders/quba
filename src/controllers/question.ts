@@ -86,15 +86,21 @@ async function remove(req: Request, res: Response) {
 async function preprocessQuestion(question: QuestionDocument): Promise<any> {
     const { subject, topic } = question;
 
-    const subject_val = await Subject.findById(subject);
-    const topic_val = await Topic.findById(topic);
-
-    return {
-        ...question.toObject(),
-        subject: subject_val.name,
-        topic: topic_val.name,
+    try {
+        const subject_val = await Subject.findById(subject);
+        const topic_val = await Topic.findById(topic);
+        return {
+            ...question.toObject(),
+            subject: subject_val.name,
+            topic: topic_val.name,
+        };
+    } catch(e) {
+        return {
+            ...question.toObject(),
+            subject: "invalid subject",
+            topic: "invalid topic",
+        }
     }
-
 }
 
 async function toReview(_req: Request, res: Response) {
