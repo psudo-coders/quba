@@ -1,13 +1,28 @@
 import React from "react";
 
-import "./Profile.css";
 import Page from "../../../components/Page/Page";
 import { FaPlus } from "react-icons/fa";
+import {
+    Chart as ChartJS,
+    ArcElement,
+    CategoryScale,
+    LinearScale,
+    BarElement,
+    Title,
+    Tooltip,
+    Legend,
+} from "chart.js";
+import { Bar, Pie } from "react-chartjs-2";
 import ProfileInfo from "../../../components/ProfileInfo/ProfileInfo";
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
-import { Pie } from "react-chartjs-2";
-
-ChartJS.register(ArcElement, Tooltip, Legend);
+ChartJS.register(
+    CategoryScale,
+    LinearScale,
+    BarElement,
+    Title,
+    ArcElement,
+    Tooltip,
+    Legend
+);
 
 function Profile(props) {
     const sidebarOptions = [
@@ -62,12 +77,17 @@ function Profile(props) {
             <ProfileInfo />
             <div className={"profile-stats"}>
                 <div className={"question-submitted"}>
-                    <h3>Total Questions Submitted: 82</h3>
+                    <h3>Total Questions Reviewed: 82</h3>
                     <Pie data={subjectData} />
                 </div>
-                <div className={"approve-score"}>
-                    <h3>Approve: 80%</h3>
+                <div className={"question-submitted"}>
+                    <h3>Total Questions Freezed: 12</h3>
+                    <Pie data={subjectData} />
                 </div>
+            </div>
+            <div className={"question-submitted"}>
+                <h3>Total Questions Freezed: 12</h3>
+                <Pie data={subjectData} />
             </div>
         </Page>
     );
