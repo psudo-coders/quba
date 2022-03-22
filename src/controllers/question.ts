@@ -13,7 +13,7 @@ async function create(req: Request, res: Response) {
     req.body.subject = new mongoose.Types.ObjectId(req.body.subject);
     req.body.topic = new mongoose.Types.ObjectId(req.body.topic);
     const question = new Question({
-        status: "pending",
+        status: "freeze",
         ...req.body,
         author: user._id,
     });
@@ -83,7 +83,6 @@ async function remove(req: Request, res: Response) {
 export default Router()
     .post(
         "/create",
-        isAuthorized(ROLES.Submitter, ROLES.Admin),
         handleError(create)
     )
     .get("/info", handleError(info))

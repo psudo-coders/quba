@@ -5,6 +5,7 @@ import { FaCheck } from "react-icons/fa";
 import "./Reviewer.css";
 import ReviewQuestions from "./ReviewQuestions";
 import GenerateQuestionPaper from "./GenerateQuestionPaper";
+import QuestionPaper from "./QuestionPaper";
 
 import CreateTopic from "./Topics/CreateTopic";
 import ViewTopics from "./Topics/ViewTopics";
@@ -66,7 +67,7 @@ function Reviewer(props) {
             <Route
                 path="/question/generate"
                 element={
-                    <GenerateQuestionPaper sidebarOptions={sidebarOptions} />
+                    <QuestionPaper sidebarOptions={sidebarOptions} />
                 }
             />
             <Route
