@@ -16,6 +16,7 @@ import EditSubject from "./Subjects/EditSubject";
 import EditTopic from "./Topics/EditTopic";
 import FreezedQuestions from "./FreezedQuestions";
 import Profile from "../Submitter/Profile/Profile";
+import EditQuestion from "./EditQuestion";
 
 const sidebarOptions = [
     {
@@ -67,6 +68,10 @@ function Reviewer(props) {
                 element={
                     <GenerateQuestionPaper sidebarOptions={sidebarOptions} />
                 }
+            />
+            <Route
+                path="/question/edit"
+                element={<EditQuestion sidebarOptions={sidebarOptions} />}
             />
             <Route
                 path="/topic/create"
