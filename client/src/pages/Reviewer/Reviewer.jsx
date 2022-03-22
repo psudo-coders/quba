@@ -21,36 +21,32 @@ const sidebarOptions = [
         label: "Review Questions",
         highlighted: true,
         icon: <FaCheck />,
-        link: "",
+        link: "/reviewer",
     },
     {
         label: "View Freezed Questions",
         icon: <BsFillCheckSquareFill />,
-        link: "",
-    },
-    {
-        label: "View Freezed Question",
-        link: "",
+        link: "/reviewer/question/freezed",
     },
     {
         label: "Generate Question Paper",
-        link: "",
+        link: "/reviewer/question/generate",
     },
     {
         label: "Create Subject",
-        link: "",
+        link: "/reviewer/subject/create",
     },
     {
         label: "Create Topic",
-        link: "",
+        link: "/reviewer/topic/create",
     },
     {
         label: "View Subjects",
-        link: "",
+        link: "/reviewer/subject/view",
     },
     {
         label: "View Topics",
-        link: "",
+        link: "/reviewer/topic/view",
     },
 ];
 
@@ -62,11 +58,11 @@ function Reviewer(props) {
                 element={<ReviewQuestions sidebarOptions={sidebarOptions} />}
             />
             <Route
-                path="freezedquestions"
+                path="/question/freezed"
                 element={<FreezedQuestions sidebarOptions={sidebarOptions} />}
             />
             <Route
-                path="genquestionpaper"
+                path="/question/generate"
                 element={
                     <GenerateQuestionPaper sidebarOptions={sidebarOptions} />
                 }
