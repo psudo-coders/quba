@@ -11,11 +11,16 @@ import TableRow from "../../components/Table/TableRow";
 import { FiFile } from "react-icons/fi";
 import { BsThreeDots } from "react-icons/bs";
 import RemoveQuestionPopup from "./RemoveQuestionPopup";
+import Dropdown from "../../components/Dropdown/Dropdown";
 
 function FreezedQuestions(props) {
     const { sidebarOptions } = props;
 
     const [popupOpen, setPopupOpen] = useState(false);
+
+    const [status, setStatus] = useState(-1);
+    const [subject, setSubject] = useState(-1);
+    const [difficulty, setDifficulty] = useState(-1);
 
     const handleQuestionClick = () => {
         setPopupOpen(true);
@@ -27,14 +32,28 @@ function FreezedQuestions(props) {
             heading={"View Freezed Questions"}
             subHeading={"Your question description"}
             search={<SearchBar placeholder={"Search Question"} />}
-            // dropdowns={
-            //     <Dropdown
-            //         name={"Status"}
-            //         options={statusOptions}
-            //         selected={selectedStatus}
-            //         setSelected={setSelectedStatus}
-            //     />
-            // }
+            dropdowns={
+                <div className={"dropdowns-container"}>
+                    <Dropdown
+                        name={"Status"}
+                        options={[]}
+                        selected={status}
+                        setSelected={setStatus}
+                    />
+                    <Dropdown
+                        name={"Status"}
+                        options={[]}
+                        selected={subject}
+                        setSelected={setSubject}
+                    />
+                    <Dropdown
+                        name={"Status"}
+                        options={[]}
+                        selected={difficulty}
+                        setSelected={setDifficulty}
+                    />
+                </div>
+            }
         >
             <Table>
                 <TableHead>
