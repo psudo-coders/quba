@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
 
 export type UserDocument = mongoose.Document & {
+    _id?: mongoose.Schema.Types.ObjectId;
     username: string;
     password: string;
     role: number;
