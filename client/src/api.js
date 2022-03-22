@@ -62,6 +62,10 @@ export const userInfo = get('/api/userInfo');
 export const logout = post('/api/logout');
 export const questionCreate = post('/api/question/create');
 export const testGenerate = get('/api/test/generate');
+export const subjectCreate = post('/api/subject/create');
+export const subjectList = get('/api/subject/list');
+export const topicCreate = post('/api/topic/create');
+export const topicList = get('/api/topic/list');
 
 export const Roles = {
     ADMIN: 0,
