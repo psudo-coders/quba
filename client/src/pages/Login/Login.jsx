@@ -7,6 +7,7 @@ import Button from "../../components/Inputs/Button";
 import Logo from "../../components/Logo/Logo";
 import { login } from "../../api";
 
+
 const footerLinks = [
     /*
     {
@@ -25,7 +26,7 @@ function Login(props) {
     // TODO: Show error + validations
     const { isError, error, mutate: doLogin } = useMutation(login, {
         onSuccess: () => {
-            goto("/");
+            goto("/Submitter/Profile");
         },
     });
 

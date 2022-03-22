@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 const footerOptions = [
     {
         label: "Profile",
-        link: "",
+        link: "/Submitter/Profile",
     },
     {
         label: "Logout",
