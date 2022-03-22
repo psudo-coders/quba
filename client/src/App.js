@@ -10,7 +10,9 @@ import Submitter from "./pages/Submitter/Submitter";
 import Reviewer from "./pages/Reviewer/Reviewer";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { UserContext } from "./context/UserContext";
-import { useState } from "react";
+import React, { useState } from "react";
+
+import UserDataUpdate from "./components/UserDataUpdate/UserDataUpdate";
 
 const queryClient = new QueryClient();
 
@@ -21,6 +23,7 @@ function App() {
         <div className="App">
             <QueryClientProvider client={queryClient}>
                 <UserContext.Provider value={[userData, setUserData]}>
+                    <UserDataUpdate />
                     <Router>
                         <Routes>
                             <Route path="/" exact element={<Home />} />

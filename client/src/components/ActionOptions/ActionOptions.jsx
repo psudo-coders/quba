@@ -28,8 +28,8 @@ function ActionOptions(props) {
                             <BsNodePlusFill color={"green"} size={20} /> Freeze
                         </div>
                     )}
-                    {onFreeze && (
-                        <div className={"action"} onClick={onFreeze}>
+                    {onRemove && (
+                        <div className={"action"} onClick={onRemove}>
                             <AiFillMinusCircle color={"red"} size={20} /> Remove
                         </div>
                     )}

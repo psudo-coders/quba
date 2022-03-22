@@ -6,20 +6,20 @@ import SidebarOption from "./SidebarOption";
 import "./Sidebar.css";
 import { useNavigate } from "react-router-dom";
 
-const footerOptions = [
-    {
-        label: "Profile",
-        link: "/Submitter/Profile",
-    },
-    {
-        label: "Logout",
-        link: "",
-    },
-];
-
 function Sidebar(props) {
     const { options, selected } = props;
     const goto = useNavigate();
+
+    const footerOptions = [
+        {
+            label: "Profile",
+            link: `${options[0]?.link}/profile`,
+        },
+        {
+            label: "Logout",
+            link: "",
+        },
+    ];
 
     return (
         <div className={"sidebar"}>
@@ -38,7 +38,7 @@ function Sidebar(props) {
             </div>
             <div className="sidebar-options">
                 {options
-                    .filter(o => !o.highlighted)
+                    .filter((o) => !o.highlighted)
                     .map((option, i) => (
                         <SidebarOption
                             key={i}
