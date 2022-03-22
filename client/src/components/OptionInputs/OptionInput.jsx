@@ -11,7 +11,7 @@ function OptionInput(props) {
         <div className={"option-input-wrapper"}>
             <p>{label}</p>
             <div className="inputs">
-                <input type="text" placeholder={"Enter question statement"} />
+                <input type="text" placeholder={"Enter option"} />
                 {!noOptions && <FaCheck className={"option-tick"} />}
                 {!noOptions && <ImAttachment className={"option-attach"} />}
             </div>
