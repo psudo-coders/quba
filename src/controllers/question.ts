@@ -5,10 +5,13 @@ import { logActivity } from "./activityLog";
 import { UserDocument } from "../models/User";
 import { isAuthorized } from "../config/passport";
 import { ROLES } from "../util/roles";
+import mongoose from "mongoose";
 
 async function create(req: Request, res: Response) {
     // TODO: handle attachments
     const user = req.user as UserDocument;
+    req.body.subject = new mongoose.Types.ObjectId(req.body.subject);
+    req.body.topic = new mongoose.Types.ObjectId(req.body.topic);
     const question = new Question({
         status: "pending",
         ...req.body,

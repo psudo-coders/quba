@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import OptionInput from "../../components/OptionInputs/OptionInput";
 import AttachTextArea from "../../components/AttachTextArea/AttachTextArea";
-import { FaArrowRight, FaEraser } from "react-icons/fa";
+import { FaArrowRight, FaCheck } from "react-icons/fa";
 import Button from "../../components/Inputs/Button";
 import Page from "../../components/Page/Page";
 import Dropdown from "../../components/Dropdown/Dropdown";
@@ -17,30 +17,29 @@ const dummyData = {
 function SubmitQuestion(props) {
     const { sidebarOptions } = props;
     const [qData, setQData] = useState({
-        subject: -1,
-        topic: -1,
-        difficulty: -1,
-        statement: "",
-        solution: "",
-        options: [{ label: 1, value: "" }],
+        subject: "6239e530f6554077a49bf55f",
+        topic: "6239e584f6554077a49bf59b",
+        // difficulty: -1,
+        statement: { text: "" },
+        solution: { text: "" },
+        correctAnswer: 1,
+        options: [{ id: 0, text: "" }],
     });
 
     const addOption = () => {
         setQData((prev) => {
-            let prevLabel = prev.options[prev.options.length - 1].label;
-            if (prevLabel >= 4) {
-                console.log("Can't have more than 4 options");
-                return {...prev}
-            }
+
+            let prevLabel = prev.options[prev.options.length - 1].id;
             return {
                 ...prev,
-                options: [...prev.options, { label: prevLabel + 1, value: "" }],
+                options: [...prev.options, { id: prevLabel + 1, text: "" }],
             };
         });
     };
 
     const SubmitQuestion = useMutation(
         (data) => {
+            console.log(qData);
             return new Promise(async (resolve, reject) => {
                 let res = await fetch("/api/question/create", {
                     method: "POST",
@@ -51,7 +50,7 @@ function SubmitQuestion(props) {
                     body: JSON.stringify(data),
                 });
                 res = await res.json();
-                if (!res.ok) reject(new Error(res.error));
+                // if (!res.ok) reject(new Error(res.error));
                 resolve(res);
             });
         },
@@ -64,6 +63,7 @@ function SubmitQuestion(props) {
     );
 
     const doSubmit = () => {
+        console.log(qData);
         SubmitQuestion.mutate(qData);
     };
 
@@ -77,7 +77,7 @@ function SubmitQuestion(props) {
                     <Dropdown
                         name={"Subject"}
                         options={dummyData.subjects}
-                        selected={qData.subject}
+                        selected={-1}
                         setSelected={(id) => {
                             setQData((prev) => {
                                 return { ...prev, subject: id };
@@ -87,7 +87,7 @@ function SubmitQuestion(props) {
                     <Dropdown
                         name={"Topic"}
                         options={dummyData.topics}
-                        selected={qData.topic}
+                        selected={-1}
                         setSelected={(id) => {
                             setQData((prev) => {
                                 return { ...prev, topic: id };
@@ -97,41 +97,46 @@ function SubmitQuestion(props) {
                     <Dropdown
                         name={"Difficulty"}
                         options={dummyData.difficulty}
-                        selected={qData.difficulty}
+                        selected={-1}
                         setSelected={(id) => {
                             setQData((prev) => {
                                 return { ...prev, difficulty: id };
                             });
                         }}
                     />
-                    {/*<PopupAlert*/}
-                    {/*    className={"submit-question"}*/}
-                    {/*    heading={"Submit Question"}*/}
-                    {/*    middle={<FaEraser className={"eraser"} />}*/}
-                    {/*    bottom={"Question submitted successfully"}*/}
-                    {/*/>*/}
                 </div>
             }
         >
+            {SubmitQuestion.isSuccess && (
+                <PopupAlert
+                    className={"remove-question"}
+                    heading={"Submit Question"}
+                    middle={<FaCheck className={"eraser"} />}
+                    bottom={"Question submitted"}
+                />
+            )}
             <div className={"submit-question-form"}>
                 <AttachTextArea
                     heading={"Enter question details"}
                     placeholder={"Enter question statement"}
-                    value={qData.statement}
+                    value={qData.statement.text}
                     onChange={(e) =>
                         setQData((prev) => {
-                            return { ...prev, statement: e.target.value };
+                            return {
+                                ...prev,
+                                statement: { text: e.target.value },
+                            };
                         })
                     }
                 />
                 {qData.options.map((option, i) => (
                     <OptionInput
-                        label={option.label}
+                        label={option.id}
                         value={option.value}
                         onChange={(e) =>
                             setQData((prev) => {
                                 let tempOptions = prev.options;
-                                tempOptions[i].value = e.target.value;
+                                tempOptions[i].text = e.target.value;
                                 return { ...prev, options: tempOptions };
                             })
                         }
@@ -143,10 +148,13 @@ function SubmitQuestion(props) {
                 <AttachTextArea
                     heading={"Enter solution details"}
                     placeholder={"Enter question solution"}
-                    value={qData.solution}
+                    value={qData.solution.text}
                     onChange={(e) =>
                         setQData((prev) => {
-                            return { ...prev, solution: e.target.value };
+                            return {
+                                ...prev,
+                                solution: { text: e.target.value },
+                            };
                         })
                     }
                 />
