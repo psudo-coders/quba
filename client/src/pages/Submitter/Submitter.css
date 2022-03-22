@@ -1,3 +1,7 @@
+html {
+    overflow-x: hidden;
+}
+
 .submit-question-form {
     margin: 20px 0;
     padding: 10px 60px;
