@@ -15,8 +15,6 @@ import { BsFillCheckSquareFill } from "react-icons/bs";
 import EditSubject from "./Subjects/EditSubject";
 import EditTopic from "./Topics/EditTopic";
 import FreezedQuestions from "./FreezedQuestions";
-import EditQuestion from "./EditQuestion";
-import Profile from "../Submitter/Profile/Profile";
 
 const sidebarOptions = [
     {
@@ -64,18 +62,14 @@ function Reviewer(props) {
                 element={<ReviewQuestions sidebarOptions={sidebarOptions} />}
             />
             <Route
-                path="/question/freezed"
+                path="freezedquestions"
                 element={<FreezedQuestions sidebarOptions={sidebarOptions} />}
             />
             <Route
-                path="/question/generate"
+                path="genquestionpaper"
                 element={
                     <GenerateQuestionPaper sidebarOptions={sidebarOptions} />
                 }
-            />
-            <Route
-                path="/question/edit"
-                element={<EditQuestion sidebarOptions={sidebarOptions} />}
             />
             <Route
                 path="/topic/create"
@@ -101,7 +95,6 @@ function Reviewer(props) {
                 path="/subject/view"
                 element={<ViewSubjects sidebarOptions={sidebarOptions} />}
             />
-            <Route path="/profile" element={<Profile />} />
         </Routes>
     );
 }

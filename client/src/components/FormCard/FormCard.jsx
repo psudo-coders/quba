@@ -8,7 +8,7 @@ function FormCard(props) {
 
     return (
         <form className={"form-card"} {...props}>
-            {isError && <p className="error">Invalid Email/Password</p> }
+            {isError && <p className="error">Invalid Credentials</p> }
             <h1>{heading}</h1>
             <div className="form-card-inputs">{props.children}</div>
             <div className="form-card-footer">

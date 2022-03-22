@@ -1,6 +1,8 @@
 import React from "react";
 import { UserContext } from "../../../context/UserContext";
 
+import "./ProfileInfo.css";
+
 function ProfileInfo(props) {
     const [userData] = React.useContext(UserContext);
 

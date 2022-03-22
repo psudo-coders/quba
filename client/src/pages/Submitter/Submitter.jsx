@@ -16,7 +16,7 @@ const sidebarOptions = [
     },
     {
         label: "Your Questions",
-        link: "/submitter/myquestions",
+        link: "/submitter/questions",
     },
 ];
 
@@ -28,7 +28,7 @@ function Submitter(props) {
                 element={<SubmitQuestion sidebarOptions={sidebarOptions} />}
             />
             <Route
-                path="myquestions"
+                path="/questions"
                 element={<YourQuestions sidebarOptions={sidebarOptions} />}
             />
             <Route path="profile" element={<Profile />} />

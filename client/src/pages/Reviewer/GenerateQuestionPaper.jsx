@@ -25,6 +25,18 @@ const topics = [
     },
 ];
 
+const difficulties = [
+    {
+        label: "Easy",
+    },
+    {
+        label: "Medium",
+    },
+    {
+        label: "Hard",
+    },
+];
+
 function GenerateQuestionPaper(props) {
     const { sidebarOptions } = props;
 
@@ -47,6 +59,13 @@ function GenerateQuestionPaper(props) {
                     <CheckboxOptions
                         options={topics}
                         label={"Select Topics"}
+                        selectedIdx={1}
+                    />
+                </div>
+                <div className="section">
+                    <CheckboxOptions
+                        options={difficulties}
+                        label={"Select Difficulty"}
                         selectedIdx={1}
                     />
                 </div>

@@ -1,0 +1,21 @@
+.view-question {
+    margin-top: 0;
+    padding: 10px 30px;
+}
+
+.view-question h1 {
+    margin: 0;
+}
+
+.question-options {
+    display: flex;
+    justify-content: center;
+}
+
+.question-options > div {
+    margin: 0 10px;
+}
+
+p.popup-heading {
+    margin: 0;
+}
