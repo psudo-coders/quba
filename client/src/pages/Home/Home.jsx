@@ -4,7 +4,7 @@ import { useQuery } from "react-query";
 import { Roles, userInfo } from "../../api";
 
 function Home(props) {
-    const { data, isLoading, isError } = useQuery("userInfo", userInfo, {
+    const { data, isLoading, isError } = useQuery("userInfo", (_) => userInfo(), {
         retry: false,
     });
 
