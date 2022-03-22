@@ -22,12 +22,16 @@ function SubmitQuestion(props) {
         difficulty: -1,
         statement: "",
         solution: "",
-        options: [{ label: 0, value: "" }],
+        options: [{ label: 1, value: "" }],
     });
 
     const addOption = () => {
         setQData((prev) => {
             let prevLabel = prev.options[prev.options.length - 1].label;
+            if (prevLabel >= 4) {
+                console.log("Can't have more than 4 options");
+                return {...prev}
+            }
             return {
                 ...prev,
                 options: [...prev.options, { label: prevLabel + 1, value: "" }],
