@@ -23,3 +23,9 @@ html {
 .dropdowns-container .dropdown {
     margin: 0 5px;
 }
+
+.add-option {
+    color: #2B6DE6;
+    font-weight: 600;
+    text-align: right;
+}
