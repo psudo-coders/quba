@@ -46,7 +46,8 @@ async function remove(req: Request, res: Response) {
 }
 
 export default Router()
-    .post("/create", isAuthorized(ROLES.Admin), handleError(create))
+    // HACK: allowing reviewer to create subjects
+    .post("/create", isAuthorized(ROLES.Reviewer), handleError(create))
     .get("/list", handleError(list))
     .post("/update", isAuthorized(ROLES.Admin), handleError(update))
     .post("/remove", isAuthorized(ROLES.Admin), handleError(remove));
