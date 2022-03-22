@@ -14,6 +14,8 @@ import RemoveQuestionPopup from "./RemoveQuestionPopup";
 import Dropdown from "../../components/Dropdown/Dropdown";
 import ActionOptions from "../../components/ActionOptions/ActionOptions";
 import { useNavigate } from "react-router-dom";
+import { useQuery } from 'react-query';
+import { questionReviewList } from "../../api";
 
 function ReviewQuestions(props) {
     const { sidebarOptions } = props;
@@ -39,6 +41,10 @@ function ReviewQuestions(props) {
         setFreezePopupOpen(true);
     };
 
+    const { data } = useQuery('questionReviewList', () => questionReviewList());
+    // TODO: make a elegant loading component
+    if (!data) return <div>Loading...</div>;
+
     return (
         <Page
             sidebarOptions={sidebarOptions}
@@ -60,27 +66,50 @@ function ReviewQuestions(props) {
                         values={["Question ID", "Subject", "Topic", "Action"]}
                     />
                 </TableHead>
+
                 <TableBody>
-                    {[0, 0, 0, 0, 0].map((v, i) => (
-                        <TableRow
-                            key={i}
-                            values={[
-                                <>
-                                    <FiFile />
-                                    <span>#17145651</span>
-                                </>,
-                                "English",
-                                "Grammar",
-                                <ActionOptions
-                                    onEdit={onEdit}
-                                    onRemove={onRemove}
-                                    onFreeze={onFreeze}
-                                />,
-                            ]}
-                        />
+                    {data.map((question, i) => (
+                        // FIXME: lets not exploit the tables
+                        // TODO(lovesh): UI
+                        <>
+                            <TableRow
+                                key={i}
+                                values={[
+                                    <>
+                                        <FiFile />
+                                        <span>{question._id.substr(-8)}</span>
+                                    </>,
+                                    question.subject,
+                                    question.topic,
+                                    <ActionOptions
+                                        onEdit={onEdit}
+                                        onRemove={onRemove}
+                                        onFreeze={onFreeze}
+                                    />,
+                                ]}
+                            />
+
+                            <tr>
+                                <td colSpan={5}>
+                                    <div className="question-description">
+                                        <p>Question: {question.statement.text}</p>
+                                        {
+                                            question.options.map((option, i) => (
+                                                <div>
+                                                    <span>{i + 1}.</span>
+                                                    <span>{option.text}</span>
+                                                </div>
+                                            ))
+                                        }
+                                    </div>
+                                </td>
+                            </tr>
+                        </>
                     ))}
                 </TableBody>
             </Table>
+
+            {/* TODO: real pagination */}
             <div className="pagination">
                 <Button label={"Prev"} icon={<FaArrowLeft />} alt />
                 <Button label={"Next"} icon={<FaArrowRight />} alt />
