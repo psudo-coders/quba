@@ -19,7 +19,7 @@ function Profile(props) {
         },
         {
             label: "Your Questions",
-            link: "/Submitter/YourQuestions",
+            link: "/Submitter/questions",
         },
     ];
 

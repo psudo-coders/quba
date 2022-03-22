@@ -30,11 +30,11 @@ function Profile(props) {
             label: "Submit Question",
             highlighted: true,
             icon: <FaPlus />,
-            link: "",
+            link: "/submitter",
         },
         {
             label: "Your Questions",
-            link: "",
+            link: "/reviewer",
         },
     ];
 
@@ -73,7 +73,7 @@ function Profile(props) {
     };
 
     return (
-        <Page sidebarOptions={sidebarOptions} heading={"User Profile"}>
+        <Page sidebarOptions={sidebarOptions} heading={"Reviewer Profile"}>
             <ProfileInfo />
             <div className={"profile-stats"}>
                 <div className={"question-submitted"}>
@@ -85,10 +85,7 @@ function Profile(props) {
                     <Pie data={subjectData} />
                 </div>
             </div>
-            <div className={"question-submitted"}>
-                <h3>Total Questions Freezed: 12</h3>
-                <Pie data={subjectData} />
-            </div>
+            
         </Page>
     );
 }
