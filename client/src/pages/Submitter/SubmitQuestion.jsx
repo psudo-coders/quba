@@ -28,6 +28,7 @@ function SubmitQuestion(props) {
 
     const addOption = () => {
         setQData((prev) => {
+
             let prevLabel = prev.options[prev.options.length - 1].id;
             return {
                 ...prev,
