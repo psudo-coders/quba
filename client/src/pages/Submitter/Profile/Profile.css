@@ -1,25 +1,4 @@
-.profile-info-container, .question-submitted, .approve-score {
-    background-color: #F1F3F6;
-    padding: 10px 20px;
-    border-radius: 5px;
-    flex: 1;
-    margin: 0 10px;
-    text-align: center;
-}
-
-.profile-info-container > p {
-    color: #55586C;
-}
-
-.profile-info-container > p > span {
-    color: black;
-}
-
 .profile-stats, .subjects-container {
     display: flex;
     flex-wrap: wrap;
-}
-
-.profile-info-container {
-    margin-bottom: 20px;
 }

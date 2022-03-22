@@ -32,9 +32,9 @@
     max-height: 85%;
 }
 
-.popup p {
-    margin: 0;
-}
+/*.popup p {*/
+/*    margin: 0;*/
+/*}*/
 
 .popup-header {
     flex: 1;

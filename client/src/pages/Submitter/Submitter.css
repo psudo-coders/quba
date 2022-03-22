@@ -15,3 +15,11 @@ html {
     width: 24px;
     height: 5px;
 }
+
+.dropdowns-container {
+    display: flex;
+}
+
+.dropdowns-container .dropdown {
+    margin: 0 5px;
+}

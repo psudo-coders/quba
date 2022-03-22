@@ -32,18 +32,38 @@ function YourQuestions(props) {
             subHeading={"Your question description"}
             search={<SearchBar placeholder={"Search Question"} />}
             dropdowns={
-                <Dropdown
-                    name={"Status"}
-                    options={statusOptions}
-                    selected={selectedStatus}
-                    setSelected={setSelectedStatus}
-                />
+                <div className={"dropdowns-container"}>
+                    <Dropdown
+                        name={"Status"}
+                        options={statusOptions}
+                        selected={selectedStatus}
+                        setSelected={setSelectedStatus}
+                    />
+                    <Dropdown
+                        name={"Topic"}
+                        options={statusOptions}
+                        selected={selectedStatus}
+                        setSelected={setSelectedStatus}
+                    />
+                    <Dropdown
+                        name={"Difficulty"}
+                        options={statusOptions}
+                        selected={selectedStatus}
+                        setSelected={setSelectedStatus}
+                    />
+                </div>
             }
         >
             <Table>
                 <TableHead>
                     <TableHeadRow
-                        values={["Statement", "Subject", "Topic", "Status"]}
+                        values={[
+                            "Statement",
+                            "Difficulty",
+                            "Subject",
+                            "Topic",
+                            "Status",
+                        ]}
                     />
                 </TableHead>
                 <TableBody>
@@ -59,6 +79,7 @@ function YourQuestions(props) {
                                         asdasfsdsfdsf
                                     </span>
                                 </>,
+                                "Hard",
                                 "English",
                                 "Grammar",
                                 <>

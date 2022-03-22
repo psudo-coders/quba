@@ -43,3 +43,11 @@
 .add-ts-container .dropdown {
     width: 250px;
 }
+
+.dropdowns-container {
+    display: flex;
+}
+
+.dropdowns-container .dropdown {
+    margin: 0 5px;
+}

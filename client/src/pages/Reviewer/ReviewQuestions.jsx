@@ -12,11 +12,14 @@ import { FiFile } from "react-icons/fi";
 import { BsThreeDots } from "react-icons/bs";
 import FreezeQuestionPopup from "./FreezeQuestionPopup";
 import RemoveQuestionPopup from "./RemoveQuestionPopup";
+import Dropdown from "../../components/Dropdown/Dropdown";
 
 function ReviewQuestions(props) {
     const { sidebarOptions } = props;
 
     const [popupOpen, setPopupOpen] = useState(false);
+
+    const [status, setStatus] = useState(-1);
 
     const handleQuestionClick = () => {
         setPopupOpen(true);
@@ -28,19 +31,25 @@ function ReviewQuestions(props) {
             heading={"Review Questions"}
             subHeading={"Your question description"}
             search={<SearchBar placeholder={"Search Question"} />}
-            // dropdowns={
-            //     <Dropdown
-            //         name={"Status"}
-            //         options={statusOptions}
-            //         selected={selectedStatus}
-            //         setSelected={setSelectedStatus}
-            //     />
-            // }
+            dropdowns={
+                <Dropdown
+                    name={"Status"}
+                    options={[]}
+                    selected={status}
+                    setSelected={setStatus}
+                />
+            }
         >
             <Table>
                 <TableHead>
                     <TableHeadRow
-                        values={["Question ID", "Subject", "Topic", "Action"]}
+                        values={[
+                            "Question ID",
+                            "Difficulty",
+                            "Subject",
+                            "Topic",
+                            "Action",
+                        ]}
                     />
                 </TableHead>
                 <TableBody>
@@ -53,6 +62,7 @@ function ReviewQuestions(props) {
                                     <FiFile />
                                     <span>#17145651</span>
                                 </>,
+                                "Hard",
                                 "English",
                                 "Grammar",
                                 <BsThreeDots />,
