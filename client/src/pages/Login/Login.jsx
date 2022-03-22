@@ -39,6 +39,7 @@ function Login(props) {
                     event.preventDefault();
                     doLogin(Object.fromEntries(new FormData(event.target).entries()));
                 }}
+                isError = {isError ? isError : false}
             >
                 <Input name="email" type="email" placeholder="Your email" />
                 <Input name="password" type="password" placeholder="Your password" />
