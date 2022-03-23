@@ -159,7 +159,7 @@ function SubmitQuestion(props) {
                         selected={qData.correctAnswer === i}
                     />
                 ))}
-                <p className="add-option" onClick={addOption}>
+                <p className="blue-text add-option" onClick={addOption}>
                     Add option +
                 </p>
                 <AttachTextArea
