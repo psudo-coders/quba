@@ -13,13 +13,22 @@ import RemoveQuestionPopup from "./RemoveQuestionPopup";
 import Dropdown from "../../components/Dropdown/Dropdown";
 import ActionOptions from "../../components/ActionOptions/ActionOptions";
 import { useNavigate } from "react-router-dom";
+import useDropdownData from "../../hooks/useDropdownData";
+import { subjectList, topicList } from "../../api";
+import { difficulties } from "../../config/difficulties";
 
 function FreezedQuestions(props) {
     const { sidebarOptions } = props;
 
-    const [status, setStatus] = useState(-1);
-    const [subject, setSubject] = useState(-1);
     const [difficulty, setDifficulty] = useState(-1);
+    const [subject, setSubject] = useState(-1);
+    const [topic, setTopic] = useState(-1);
+
+    const [topicsData, tIsSuccess] = useDropdownData("topicList", topicList);
+    const [subjectsData, sIsSuccess] = useDropdownData(
+        "subjectList",
+        subjectList
+    );
 
     const [removePopupOpen, setRemovePopupOpen] = useState(false);
 
@@ -40,26 +49,31 @@ function FreezedQuestions(props) {
             subHeading={"Your question description"}
             search={<SearchBar placeholder={"Search Question"} />}
             dropdowns={
-                <div className={"dropdowns-container"}>
-                    <Dropdown
-                        name={"Status"}
-                        options={[]}
-                        selected={status}
-                        setSelected={setStatus}
-                    />
-                    <Dropdown
-                        name={"Status"}
-                        options={[]}
-                        selected={subject}
-                        setSelected={setSubject}
-                    />
-                    <Dropdown
-                        name={"Status"}
-                        options={[]}
-                        selected={difficulty}
-                        setSelected={setDifficulty}
-                    />
-                </div>
+                sIsSuccess &&
+                tIsSuccess && (
+                    <div className={"dropdowns-container"}>
+                        <Dropdown
+                            name={"Subject"}
+                            options={subjectsData.map(
+                                (subject) => subject.name
+                            )}
+                            selected={subject}
+                            setSelected={setSubject}
+                        />
+                        <Dropdown
+                            name={"Topic"}
+                            options={topicsData.map((topic) => topic.name)}
+                            selected={topic}
+                            setSelected={setTopic}
+                        />
+                        <Dropdown
+                            name={"Difficulty"}
+                            options={difficulties}
+                            selected={difficulty}
+                            setSelected={setDifficulty}
+                        />
+                    </div>
+                )
             }
         >
             <Table>
