@@ -15,7 +15,7 @@ import Dropdown from "../../components/Dropdown/Dropdown";
 import Loading from "../../components/Loading/Loading";
 import ActionOptions from "../../components/ActionOptions/ActionOptions";
 import { useNavigate } from "react-router-dom";
-import { useQuery } from 'react-query';
+import { useQuery } from "react-query";
 import { questionReviewList } from "../../api";
 
 function ReviewQuestions(props) {
@@ -42,7 +42,7 @@ function ReviewQuestions(props) {
         setFreezePopupOpen(true);
     };
 
-    const { data } = useQuery('questionReviewList', () => questionReviewList());
+    const { data } = useQuery("questionReviewList", questionReviewList);
     if (!data) return <Loading />;
 
     return (
@@ -63,7 +63,13 @@ function ReviewQuestions(props) {
             <Table>
                 <TableHead>
                     <TableHeadRow
-                        values={["Question ID", "Subject", "Topic", "Action"]}
+                        values={[
+                            "Question ID",
+                            "Difficulty",
+                            "Subject",
+                            "Topic",
+                            "Action",
+                        ]}
                     />
                 </TableHead>
 
@@ -79,6 +85,7 @@ function ReviewQuestions(props) {
                                         <FiFile />
                                         <span>{question._id.substr(-8)}</span>
                                     </>,
+                                    question.difficulty,
                                     question.subject,
                                     question.topic,
                                     <ActionOptions
@@ -92,15 +99,15 @@ function ReviewQuestions(props) {
                             <tr>
                                 <td colSpan={5}>
                                     <div className="question-description">
-                                        <p>Question: {question.statement.text}</p>
-                                        {
-                                            question.options.map((option, i) => (
-                                                <div>
-                                                    <span>{i + 1}.</span>
-                                                    <span>{option.text}</span>
-                                                </div>
-                                            ))
-                                        }
+                                        <p>
+                                            Question: {question.statement.text}
+                                        </p>
+                                        {question.options.map((option, i) => (
+                                            <div>
+                                                <span>{i + 1}.</span>
+                                                <span>{option.text}</span>
+                                            </div>
+                                        ))}
                                     </div>
                                 </td>
                             </tr>
