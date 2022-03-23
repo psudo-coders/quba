@@ -15,6 +15,7 @@ import { useNavigate } from "react-router-dom";
 import { useMutation, useQuery } from "react-query";
 import { questionReviewList, questionUpdate } from "../../api";
 import ViewQuestionPopup from "../Submitter/ViewQuestionPopup";
+import { statuses } from "../../config/difficulties";
 
 function ReviewQuestions(props) {
     const { sidebarOptions } = props;
@@ -23,9 +24,7 @@ function ReviewQuestions(props) {
     const [questionPopupOpen, setQuestionPopupOpen] = useState(false);
     const [selectedQuestion, setSelectedQuestion] = useState({});
 
-    const [selectedStatus, setSelectedStatus] = useState(-1);
-
-    const statusOptions = ["Option 1", "Option 2"];
+    const [status, setStatus] = useState(-1);
 
     const goto = useNavigate();
 
@@ -69,9 +68,9 @@ function ReviewQuestions(props) {
             dropdowns={
                 <Dropdown
                     name={"Status"}
-                    options={statusOptions}
-                    selected={selectedStatus}
-                    setSelected={setSelectedStatus}
+                    options={statuses}
+                    selected={status}
+                    setSelected={setStatus}
                 />
             }
         >
