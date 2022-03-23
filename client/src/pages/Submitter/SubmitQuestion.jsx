@@ -8,6 +8,7 @@ import Dropdown from "../../components/Dropdown/Dropdown";
 import { useMutation, useQuery } from "react-query";
 import PopupAlert from "../../components/PopupAlert/PopupAlert";
 import { questionCreate, subjectList } from "../../api";
+import { useNavigate } from "react-router-dom";
 
 const dummyData = {
     topics: ["Topic 1", "Topic 2"],
@@ -26,7 +27,7 @@ function SubmitQuestion(props) {
         statement: { text: "" },
         solution: { text: "" },
         correctAnswer: 1,
-        options: [{ id: 1, text: "" }],
+        options: [{ id: 0, text: "" }],
     });
 
     const addOption = () => {
@@ -54,21 +55,13 @@ function SubmitQuestion(props) {
             onError: () => {},
         }
     );
+    const navigate = useNavigate();
 
     const doSubmit = () => {
         console.log(qData);
-        SubmitQuestion.mutate(qData);
         setPopupOpen(true);
-        setQData({
-            subject: "6239e530f6554077a49bf55f",
-            topic: "6239e584f6554077a49bf59b",
-            // difficulty: -1,
-            statement: { text: "" },
-            solution: { text: "" },
-            correctAnswer: 1,
-            options: [{ id: 1, text: "" }],
-
-        })
+        console.log(popupOpen);
+        SubmitQuestion.mutate(qData);
     };
 
     return (
@@ -111,7 +104,7 @@ function SubmitQuestion(props) {
                 </div>
             }
         >
-            {SubmitQuestion.isSuccess && popupOpen && (
+             {SubmitQuestion.isSuccess && popupOpen && (
                 <PopupAlert
                     className={"remove-question"}
                     heading={"Submit Question"}
