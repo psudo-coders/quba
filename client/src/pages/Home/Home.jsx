@@ -15,9 +15,9 @@ function Home(props) {
         case Roles.ADMIN:
             return <Navigate to="/admin" />;
         case Roles.SUBMITTER:
-            return <Navigate to="/submitter" />;
+            return <Navigate to="/submitter/profile" />;
         case Roles.REVIEWER:
-            return <Navigate to="/reviewer" />;
+            return <Navigate to="/reviewer/profile" />;
     }
 }
 

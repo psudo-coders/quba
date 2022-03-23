@@ -24,7 +24,7 @@ function SubmitQuestion(props) {
         statement: { text: "" },
         solution: { text: "" },
         correctAnswer: 1,
-        options: [{ id: 0, text: "" }],
+        options: [{ id: 1, text: "" }],
     });
 
     const addOption = () => {
