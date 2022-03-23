@@ -8,20 +8,24 @@ import TableBody from "../../components/Table/TableBody";
 import TableRow from "../../components/Table/TableRow";
 import { FiFile } from "react-icons/fi";
 import RemoveQuestionPopup from "./RemoveQuestionPopup";
-import Dropdown from "../../components/Dropdown/Dropdown";
 import Loading from "../../components/Loading/Loading";
 import ActionOptions from "../../components/ActionOptions/ActionOptions";
 import { useNavigate } from "react-router-dom";
 import { useMutation, useQuery } from "react-query";
-import { questionReviewList, questionUpdate } from "../../api";
+import { questionRemove, questionReviewList, questionUpdate } from "../../api";
 import ViewQuestionPopup from "../Submitter/ViewQuestionPopup";
+
+import { useQueryClient } from "react-query";
+import SuccessAlert from "../../components/PopupAlert/SuccessAlert";
+import ErrorAlert from "../../components/PopupAlert/ErrorAlert";
 
 function ReviewQuestions(props) {
     const { sidebarOptions } = props;
 
-    const [removePopupOpen, setRemovePopupOpen] = useState(false);
     const [questionPopupOpen, setQuestionPopupOpen] = useState(false);
     const [selectedQuestion, setSelectedQuestion] = useState({});
+
+    const queryClient = useQueryClient();
 
     const goto = useNavigate();
 
@@ -29,8 +33,14 @@ function ReviewQuestions(props) {
         goto("/reviewer/question/edit");
     };
 
-    const onRemove = () => {
-        setRemovePopupOpen(true);
+    const removeQuestion = useMutation((id) => questionRemove({ id }), {
+        onSuccess: () => {
+            queryClient.invalidateQueries("questionReviewList");
+        },
+    });
+
+    const onRemove = (id) => {
+        removeQuestion.mutate(id);
     };
 
     const handleQuestionClick = (question) => {
@@ -38,19 +48,17 @@ function ReviewQuestions(props) {
         setQuestionPopupOpen(true);
     };
 
-    const { mutate: freezeQuestion } = useMutation(
+    const freezeQuestion = useMutation(
         (id) => questionUpdate({ id, status: "freeze" }),
         {
             onSuccess: () => {
-                console.log("success freeze");
+                queryClient.invalidateQueries("questionReviewList");
             },
         }
     );
 
     const onFreeze = (id) => {
-        console.log("freeze");
-        freezeQuestion(id);
-        window.location.reload();
+        freezeQuestion.mutate(id);
     };
 
     const { data } = useQuery("questionReviewList", questionReviewList);
@@ -82,8 +90,7 @@ function ReviewQuestions(props) {
                         // TODO(lovesh): UI
                         <>
                             <TableRow
-                                key={i}
-                                onClick={() => handleQuestionClick(question)}
+                                key={question._id}
                                 values={[
                                     <>
                                         <FiFile />
@@ -93,8 +100,11 @@ function ReviewQuestions(props) {
                                     question.subject,
                                     question.topic,
                                     <ActionOptions
+                                        onView={() =>
+                                            handleQuestionClick(question)
+                                        }
                                         onEdit={onEdit}
-                                        onRemove={onRemove}
+                                        onRemove={() => onRemove(question._id)}
                                         onFreeze={() => onFreeze(question._id)}
                                     />,
                                 ]}
@@ -120,13 +130,27 @@ function ReviewQuestions(props) {
                 </TableBody>
             </Table>
 
-            {removePopupOpen && (
-                <RemoveQuestionPopup setOpen={setRemovePopupOpen} />
+            {removeQuestion.isSuccess && (
+                <RemoveQuestionPopup onClose={() => removeQuestion.reset()} />
             )}
             {questionPopupOpen && (
                 <ViewQuestionPopup
                     question={selectedQuestion}
                     setOpen={setQuestionPopupOpen}
+                />
+            )}
+            {freezeQuestion.isSuccess && (
+                <SuccessAlert
+                    heading={"Question freezed"}
+                    bottom={"Question freezed successfully"}
+                    reset={freezeQuestion.reset}
+                />
+            )}
+            {freezeQuestion.isError && (
+                <ErrorAlert
+                    heading={"Question freeze failed"}
+                    bottom={freezeQuestion.error.toString()}
+                    reset={freezeQuestion.reset}
                 />
             )}
         </Page>
