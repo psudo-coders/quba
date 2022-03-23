@@ -1,7 +1,6 @@
 import React from "react";
 
 import Page from "../../../components/Page/Page";
-import { FaPlus } from "react-icons/fa";
 import {
     Chart as ChartJS,
     ArcElement,
@@ -14,7 +13,7 @@ import {
 } from "chart.js";
 import { Bar, Pie } from "react-chartjs-2";
 import ProfileInfo from "../../../components/ProfileInfo/ProfileInfo";
-import { sidebarOptions } from "../Reviewer"
+import { sidebarOptions } from "../Reviewer";
 ChartJS.register(
     CategoryScale,
     LinearScale,
@@ -73,7 +72,6 @@ function Profile(props) {
                     <Pie data={subjectData} />
                 </div>
             </div>
-            
         </Page>
     );
 }
