@@ -47,6 +47,11 @@
     background: #EAFAF6;
 }
 
+.option-input-wrapper .inputs .option-tick:hover, .option-input-wrapper .inputs .option-tick.selected {
+    background: #2CCAA9;
+    color: white;
+}
+
 .option-input-wrapper .inputs .option-attach {
     color: white;
     background: #2B6DE6;
