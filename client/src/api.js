@@ -61,6 +61,7 @@ export const signup = post('/api/signup');
 export const userInfo = get('/api/userInfo');
 export const logout = post('/api/logout');
 export const questionCreate = post('/api/question/create');
+export const questionUpdate = post('/api/question/update');
 export const testGenerate = get('/api/test/generate');
 export const subjectCreate = post('/api/subject/create');
 export const subjectList = get('/api/subject/list');
