@@ -1,5 +1,5 @@
 import { Request, Response, Router } from "express";
-import { Subject, SubjectDocument } from "../models/Subject"
+import { Subject } from "../models/Subject";
 import { logActivity } from "./activityLog";
 import { handleError } from "./util";
 import { isAuthorized } from "../config/passport";
@@ -13,12 +13,18 @@ async function create(req: Request, res: Response) {
         action: "create",
         data: subject,
     });
+
     res.json({ id: subject._id });
 }
 
 async function list(_req: Request, res: Response) {
     const subjects = await Subject.find().exec();
     res.json(subjects);
+}
+
+async function fetchById(req: Request, res: Response) {
+    const subject = await Subject.findOne({ _id: req.query.subjectId }).exec();
+    res.json(subject);
 }
 
 async function update(req: Request, res: Response) {
@@ -49,6 +55,6 @@ export default Router()
     // HACK: allowing reviewer to create subjects
     .post("/create", isAuthorized(ROLES.Reviewer), handleError(create))
     .get("/list", handleError(list))
-    .post("/update", isAuthorized(ROLES.Admin), handleError(update))
-    .post("/remove", isAuthorized(ROLES.Admin), handleError(remove));
-
+    .post("/update", isAuthorized(ROLES.Reviewer), handleError(update))
+    .post("/remove", isAuthorized(ROLES.Reviewer), handleError(remove))
+    .get("/fetchById", handleError(fetchById));

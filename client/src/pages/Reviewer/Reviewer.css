@@ -2,6 +2,10 @@
     color: #2CCAA9;
 }
 
+.popup-alert-content svg.error-circle {
+    color: #ff4343;
+}
+
 .popup-alert-content svg.eraser {
     color: cornflowerblue;
 }
