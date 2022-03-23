@@ -11,11 +11,13 @@ import TableRow from "../../../components/Table/TableRow";
 import { FiFile } from "react-icons/fi";
 import ActionOptions from "../../../components/ActionOptions/ActionOptions";
 import { useNavigate } from "react-router-dom";
+import { useQuery } from "react-query"
+import { subjectList } from "../../../api";
 
 function ViewSubjects(props) {
     const { sidebarOptions } = props;
 
-    const handleTopicClick = () => {};
+    const handleSubjectClick = () => {};
 
     const onEdit = () => {
         goto("/reviewer/subject/edit");
@@ -24,6 +26,11 @@ function ViewSubjects(props) {
     const onRemove = () => {};
 
     const goto = useNavigate();
+
+    const { data, isLoading } = useQuery("subjects", subjectList);
+    if (isLoading) {
+        return <div>Loading...</div>;
+    }
 
     return (
         <Page
@@ -42,24 +49,23 @@ function ViewSubjects(props) {
             <Table>
                 <TableHead>
                     <TableHeadRow
-                        values={["Subject ID", "Subject Name", "Action"]}
+                        values={["Subject Name"]}
                     />
                 </TableHead>
                 <TableBody>
-                    {[0, 0, 0, 0, 0].map((v, i) => (
+                    {data.map((subject, i) => (
                         <TableRow
                             key={i}
-                            onClick={handleTopicClick}
+                            onClick={handleSubjectClick}
                             values={[
-                                <>
-                                    <FiFile />
-                                    <span>#17116516</span>
-                                </>,
-                                "Grammar",
+                                subject.name,
+                                // TODO: reconsider this
+                                /*
                                 <ActionOptions
                                     onEdit={onEdit}
                                     onRemove={onRemove}
                                 />,
+                                */
                             ]}
                         />
                     ))}
