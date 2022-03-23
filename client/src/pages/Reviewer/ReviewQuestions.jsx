@@ -117,10 +117,10 @@ function ReviewQuestions(props) {
             </Table>
 
             {/* TODO: real pagination */}
-            <div className="pagination">
+            {/* <div className="pagination">
                 <Button label={"Prev"} icon={<FaArrowLeft />} alt />
                 <Button label={"Next"} icon={<FaArrowRight />} alt />
-            </div>
+            </div> */}
             {freezePopupOpen && (
                 <FreezeQuestionPopup setOpen={setFreezePopupOpen} />
             )}
