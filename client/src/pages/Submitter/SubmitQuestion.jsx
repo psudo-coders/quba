@@ -14,12 +14,12 @@ import { useNavigate } from "react-router-dom";
 
 function SubmitQuestion(props) {
     const { sidebarOptions } = props;
-  
+
     const [popupOpen, setPopupOpen] = useState(false);
 
     const [dSubject, setDSubject] = useState(-1);
     const [dTopic, setDTopic] = useState(-1);
-  
+
     const [qData, setQData] = useState({
         subject: -1,
         topic: -1,
@@ -82,7 +82,7 @@ function SubmitQuestion(props) {
                                     setDSubject(i);
                                     return {
                                         ...prev,
-                                        subject: subjectsData[i]._id,
+                                        subject: subjectsData[i]?._id || -1,
                                     };
                                 });
                             }}
@@ -96,7 +96,7 @@ function SubmitQuestion(props) {
                                     setDTopic(i);
                                     return {
                                         ...prev,
-                                        topic: topicsData[i]._id,
+                                        topic: topicsData[i]?._id || -1,
                                     };
                                 });
                             }}
@@ -115,7 +115,7 @@ function SubmitQuestion(props) {
                 )
             }
         >
-             {SubmitQuestion.isSuccess && popupOpen && (
+            {SubmitQuestion.isSuccess && popupOpen && (
                 <PopupAlert
                     className={"remove-question"}
                     heading={"Submit Question"}
@@ -123,7 +123,7 @@ function SubmitQuestion(props) {
                     bottom={"Question submitted"}
                     setOpen={setPopupOpen}
                 />
-            ) }
+            )}
             <div className={"submit-question-form"}>
                 <AttachTextArea
                     heading={"Enter question details"}
