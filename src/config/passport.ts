@@ -75,12 +75,12 @@ export const isAuthorized =
         const user = req.user as UserDocument;
 
         if (!user) {
-            res.sendStatus(401);
+            return res.sendStatus(401);
         }
 
         const hasRole = roles.find((role) => user.role === role);
         if (!hasRole) {
-            res.sendStatus(403);
+            return res.sendStatus(403);
         }
 
         return next();
