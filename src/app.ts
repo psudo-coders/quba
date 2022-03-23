@@ -16,6 +16,7 @@ import test from "./controllers/test";
 
 import { isAuthenticated, isAuthorized } from "./config/passport";
 import { ROLES } from "./util/roles";
+import activityLog from "./controllers/activityLog";
 
 // Create express app
 const app = express();
@@ -71,6 +72,7 @@ app.use("/api/question", isAuthenticated, questions);
 app.use("/api/subject", isAuthenticated, subject);
 app.use("/api/topic", isAuthenticated, topic);
 app.use("/api/test", isAuthenticated, test);
+app.use("/api/activityLog", isAuthenticated, activityLog);
 
 // All other GET requests not handled before will return our React app
 app.get("*", (req: Request, res: Response): void => {

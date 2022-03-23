@@ -67,6 +67,7 @@ export const subjectList = get('/api/subject/list');
 export const topicCreate = post('/api/topic/create');
 export const topicList = get('/api/topic/list');
 export const questionReviewList = get('/api/question/toReview')
+export const questionFrozen = get('/api/activityLog/questionsFreezedByMe')
 
 export const Roles = {
     ADMIN: 0,

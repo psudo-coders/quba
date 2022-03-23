@@ -33,8 +33,8 @@ async function QuestionFreezedByMe(req: Request, res: Response) {
         changes: {
             status: "freeze",
         }
-    });
-    res.json(Promise.all(activityLogs.map((a: any) => preprocessQuestion(a.data as any))));
+    }).exec();
+    res.json(await Promise.all(activityLogs.map((a: any) => preprocessQuestion(a.data as any))));
 }
 
 export async function logActivity(activity: Partial<ActivityLogDocument>, req?: Request) {
@@ -44,5 +44,5 @@ export async function logActivity(activity: Partial<ActivityLogDocument>, req?: 
 
 export default Router()
     .get("/list", handleError(list))
-    .get("/QuestionsFreezedByMe", handleError(QuestionFreezedByMe))
+    .get("/questionsFreezedByMe", handleError(QuestionFreezedByMe))
 
