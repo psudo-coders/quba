@@ -15,13 +15,12 @@ import Dropdown from "../../components/Dropdown/Dropdown";
 import Loading from "../../components/Loading/Loading";
 import ActionOptions from "../../components/ActionOptions/ActionOptions";
 import { useNavigate } from "react-router-dom";
-import { useQuery } from "react-query";
-import { questionReviewList } from "../../api";
+import { useMutation, useQuery } from "react-query";
+import { questionReviewList, questionUpdate } from "../../api";
 
 function ReviewQuestions(props) {
     const { sidebarOptions } = props;
 
-    const [freezePopupOpen, setFreezePopupOpen] = useState(false);
     const [removePopupOpen, setRemovePopupOpen] = useState(false);
 
     const [selectedStatus, setSelectedStatus] = useState(-1);
@@ -38,8 +37,15 @@ function ReviewQuestions(props) {
         setRemovePopupOpen(true);
     };
 
-    const onFreeze = () => {
-        setFreezePopupOpen(true);
+    const { mutate: freezeQuestion } = useMutation((id => questionUpdate({id, status: "freeze"})), {
+        onSuccess: () => {
+            console.log("success freeze");
+        }
+    });
+
+    const onFreeze = (id) => {
+        console.log("freeze");
+        freezeQuestion(id);
     };
 
     const { data } = useQuery("questionReviewList", questionReviewList);
@@ -91,7 +97,7 @@ function ReviewQuestions(props) {
                                     <ActionOptions
                                         onEdit={onEdit}
                                         onRemove={onRemove}
-                                        onFreeze={onFreeze}
+                                        onFreeze={() => onFreeze(question._id)}
                                     />,
                                 ]}
                             />
@@ -120,10 +126,7 @@ function ReviewQuestions(props) {
             {/* <div className="pagination">
                 <Button label={"Prev"} icon={<FaArrowLeft />} alt />
                 <Button label={"Next"} icon={<FaArrowRight />} alt />
-            </div> */}
-            {freezePopupOpen && (
-                <FreezeQuestionPopup setOpen={setFreezePopupOpen} />
-            )}
+            </div>
             {removePopupOpen && (
                 <RemoveQuestionPopup setOpen={setRemovePopupOpen} />
             )}
