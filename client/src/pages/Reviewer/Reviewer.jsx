@@ -19,6 +19,7 @@ import Profile from "./Profile/Profile";
 import EditQuestion from "./EditQuestion";
 import { UserContext } from "../../context/UserContext";
 import { Roles } from "../../api";
+import GenerateQuestionPaper from "./GenerateQuestionPaper";
 
 export const sidebarOptions = [
     {
@@ -76,6 +77,12 @@ function Reviewer(props) {
             />
             <Route
                 path="/question/generate"
+                element={
+                    <GenerateQuestionPaper sidebarOptions={sidebarOptions} />
+                }
+            />
+            <Route
+                path="/question/generated"
                 element={<QuestionPaper sidebarOptions={sidebarOptions} />}
             />
             <Route

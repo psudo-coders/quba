@@ -11,17 +11,30 @@ import TableRow from "../../components/Table/TableRow";
 import { FiFile } from "react-icons/fi";
 import RemoveQuestionPopup from "./RemoveQuestionPopup";
 import Dropdown from "../../components/Dropdown/Dropdown";
+import Loading from "../../components/Loading/Loading";
 import ActionOptions from "../../components/ActionOptions/ActionOptions";
 import { useNavigate } from "react-router-dom";
+import useDropdownData from "../../hooks/useDropdownData";
+import { subjectList, topicList } from "../../api";
+import { difficulties } from "../../config/difficulties";
+import { useQuery } from "react-query"
+import { questionFrozen } from '../../api'
 
 function FreezedQuestions(props) {
     const { sidebarOptions } = props;
 
-    const [status, setStatus] = useState(-1);
-    const [subject, setSubject] = useState(-1);
     const [difficulty, setDifficulty] = useState(-1);
+    const [subject, setSubject] = useState(-1);
+    const [topic, setTopic] = useState(-1);
+
+    const [topicsData, tIsSuccess] = useDropdownData("topicList", topicList);
+    const [subjectsData, sIsSuccess] = useDropdownData(
+        "subjectList",
+        subjectList
+    );
 
     const [removePopupOpen, setRemovePopupOpen] = useState(false);
+    const {data, isLoading} = useQuery("questionFrozen", questionFrozen);
 
     const goto = useNavigate();
 
@@ -33,6 +46,8 @@ function FreezedQuestions(props) {
         setRemovePopupOpen(true);
     };
 
+    if(isLoading) return <Loading />
+
     return (
         <Page
             sidebarOptions={sidebarOptions}
@@ -40,26 +55,31 @@ function FreezedQuestions(props) {
             subHeading={"Your question description"}
             search={<SearchBar placeholder={"Search Question"} />}
             dropdowns={
-                <div className={"dropdowns-container"}>
-                    <Dropdown
-                        name={"Status"}
-                        options={[]}
-                        selected={status}
-                        setSelected={setStatus}
-                    />
-                    <Dropdown
-                        name={"Status"}
-                        options={[]}
-                        selected={subject}
-                        setSelected={setSubject}
-                    />
-                    <Dropdown
-                        name={"Status"}
-                        options={[]}
-                        selected={difficulty}
-                        setSelected={setDifficulty}
-                    />
-                </div>
+                sIsSuccess &&
+                tIsSuccess && (
+                    <div className={"dropdowns-container"}>
+                        <Dropdown
+                            name={"Subject"}
+                            options={subjectsData.map(
+                                (subject) => subject.name
+                            )}
+                            selected={subject}
+                            setSelected={setSubject}
+                        />
+                        <Dropdown
+                            name={"Topic"}
+                            options={topicsData.map((topic) => topic.name)}
+                            selected={topic}
+                            setSelected={setTopic}
+                        />
+                        <Dropdown
+                            name={"Difficulty"}
+                            options={difficulties}
+                            selected={difficulty}
+                            setSelected={setDifficulty}
+                        />
+                    </div>
+                )
             }
         >
             <Table>
@@ -69,16 +89,16 @@ function FreezedQuestions(props) {
                     />
                 </TableHead>
                 <TableBody>
-                    {[0, 0, 0, 0, 0].map((v, i) => (
+                    {data.map((question, i) => (
                         <TableRow
                             key={i}
                             values={[
                                 <>
                                     <FiFile />
-                                    <span>#17145651</span>
+                                    <span>{question._id.substr(-8)}</span>
                                 </>,
-                                "English",
-                                "Grammar",
+                                question.subject,
+                                question.topic,
                                 <ActionOptions
                                     onEdit={onEdit}
                                     onRemove={onRemove}
@@ -88,10 +108,10 @@ function FreezedQuestions(props) {
                     ))}
                 </TableBody>
             </Table>
-            <div className="pagination">
+            {/* <div className="pagination">
                 <Button label={"Prev"} icon={<FaArrowLeft />} alt />
                 <Button label={"Next"} icon={<FaArrowRight />} alt />
-            </div>
+            </div> */}
             {removePopupOpen && (
                 <RemoveQuestionPopup setOpen={setRemovePopupOpen} />
             )}

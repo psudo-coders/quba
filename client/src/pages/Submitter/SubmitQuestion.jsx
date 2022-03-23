@@ -5,32 +5,33 @@ import { FaArrowRight, FaCheck } from "react-icons/fa";
 import Button from "../../components/Inputs/Button";
 import Page from "../../components/Page/Page";
 import Dropdown from "../../components/Dropdown/Dropdown";
-import { useMutation, useQuery } from "react-query";
+import { useMutation } from "react-query";
 import PopupAlert from "../../components/PopupAlert/PopupAlert";
-import { questionCreate, subjectList } from "../../api";
-
-const dummyData = {
-    topics: ["Topic 1", "Topic 2"],
-    difficulty: ["Easy", "Medium", "Hard"],
-};
+import { questionCreate, subjectList, topicList } from "../../api";
+import useDropdownData from "../../hooks/useDropdownData";
+import { difficulties } from "../../config/difficulties";
+import { useNavigate } from "react-router-dom";
 
 function SubmitQuestion(props) {
     const { sidebarOptions } = props;
 
+    const [popupOpen, setPopupOpen] = useState(false);
+
+    const [dSubject, setDSubject] = useState(-1);
+    const [dTopic, setDTopic] = useState(-1);
 
     const [qData, setQData] = useState({
-        subject: "6239e530f6554077a49bf55f",
-        topic: "6239e584f6554077a49bf59b",
-        // difficulty: -1,
+        subject: -1,
+        topic: -1,
+        difficulty: -1,
         statement: { text: "" },
         solution: { text: "" },
-        correctAnswer: 1,
-        options: [{ id: 1, text: "" }],
+        correctAnswer: 0,
+        options: [{ id: 0, text: "" }],
     });
 
     const addOption = () => {
         setQData((prev) => {
-
             let prevLabel = prev.options[prev.options.length - 1].id;
             return {
                 ...prev,
@@ -39,23 +40,30 @@ function SubmitQuestion(props) {
         });
     };
 
-    let {data: subjects} = useQuery("subjectList", subjectList);
-    if (subjects === undefined) subjects = [];
-    const subjectNames = subjects.map((subject) => subject.name);
-    const subjectIds = subjects.map((subject) => subject._id);
+    const setCorrectAnswer = (i) => {
+        setQData((prev) => {
+            return { ...prev, correctAnswer: i };
+        });
+    };
 
-    const SubmitQuestion = useMutation(
-        questionCreate,
-        {
-            onSuccess: () => {
-                console.log("success");
-            },
-            onError: () => {},
-        }
+    const [topicsData, tIsSuccess] = useDropdownData("topicList", topicList);
+    const [subjectsData, sIsSuccess] = useDropdownData(
+        "subjectList",
+        subjectList
     );
+    const navigate = useNavigate();
+
+    const SubmitQuestion = useMutation(questionCreate, {
+        onSuccess: () => {
+            console.log("success");
+        },
+        onError: () => {},
+    });
 
     const doSubmit = () => {
         console.log(qData);
+        setPopupOpen(true);
+        console.log(popupOpen);
         SubmitQuestion.mutate(qData);
     };
 
@@ -65,46 +73,61 @@ function SubmitQuestion(props) {
             heading={"Submit Question"}
             subHeading={"Submit your question description"}
             dropdowns={
-                <div className={"dropdowns-container"}>
-                    <Dropdown
-                        name={"Subject"}
-                        options={subjectNames}
-                        selected={-1}
-                        setSelected={(id) => {
-                            setQData((prev) => {
-                                return { ...prev, subject: subjectIds[id] };
-                            });
-                        }}
-                    />
-                    <Dropdown
-                        name={"Topic"}
-                        options={dummyData.topics}
-                        selected={-1}
-                        setSelected={(id) => {
-                            setQData((prev) => {
-                                return { ...prev, topic: id };
-                            });
-                        }}
-                    />
-                    <Dropdown
-                        name={"Difficulty"}
-                        options={dummyData.difficulty}
-                        selected={-1}
-                        setSelected={(id) => {
-                            setQData((prev) => {
-                                return { ...prev, difficulty: id };
-                            });
-                        }}
-                    />
-                </div>
+                sIsSuccess &&
+                tIsSuccess && (
+                    <div className={"dropdowns-container"}>
+                        <Dropdown
+                            name={"Subject"}
+                            options={subjectsData.map(
+                                (subject) => subject.name
+                            )}
+                            selected={dSubject}
+                            setSelected={(i) => {
+                                setQData((prev) => {
+                                    console.log(subjectsData[i]);
+                                    setDSubject(i);
+                                    return {
+                                        ...prev,
+                                        subject: subjectsData[i]?._id || -1,
+                                    };
+                                });
+                            }}
+                        />
+                        <Dropdown
+                            name={"Topic"}
+                            options={topicsData.map((topic) => topic.name)}
+                            selected={dTopic}
+                            setSelected={(i) => {
+                                setQData((prev) => {
+                                    setDTopic(i);
+                                    return {
+                                        ...prev,
+                                        topic: topicsData[i]?._id || -1,
+                                    };
+                                });
+                            }}
+                        />
+                        <Dropdown
+                            name={"Difficulty"}
+                            options={difficulties}
+                            selected={qData.difficulty}
+                            setSelected={(id) => {
+                                setQData((prev) => {
+                                    return { ...prev, difficulty: id };
+                                });
+                            }}
+                        />
+                    </div>
+                )
             }
         >
-            {SubmitQuestion.isSuccess && (
+            {SubmitQuestion.isSuccess && popupOpen && (
                 <PopupAlert
                     className={"remove-question"}
                     heading={"Submit Question"}
                     middle={<FaCheck className={"eraser"} />}
                     bottom={"Question submitted"}
+                    setOpen={setPopupOpen}
                 />
             )}
             <div className={"submit-question-form"}>
@@ -123,7 +146,7 @@ function SubmitQuestion(props) {
                 />
                 {qData.options.map((option, i) => (
                     <OptionInput
-                        label={option.id}
+                        label={String.fromCharCode(65 + option.id)}
                         value={option.value}
                         onChange={(e) =>
                             setQData((prev) => {
@@ -132,9 +155,11 @@ function SubmitQuestion(props) {
                                 return { ...prev, options: tempOptions };
                             })
                         }
+                        onClick={() => setCorrectAnswer(i)}
+                        selected={qData.correctAnswer === i}
                     />
                 ))}
-                <p className="add-option" onClick={addOption}>
+                <p className="blue-text add-option" onClick={addOption}>
                     Add option +
                 </p>
                 <AttachTextArea

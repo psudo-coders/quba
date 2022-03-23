@@ -61,6 +61,7 @@ export const signup = post("/api/signup");
 export const userInfo = get("/api/userInfo");
 export const logout = post("/api/logout");
 export const questionCreate = post("/api/question/create");
+export const questionUpdate = post('/api/question/update');
 export const testGenerate = get("/api/test/generate");
 export const subjectCreate = post("/api/subject/create");
 export const subjectFetch = get("/api/subject/fetchById");
@@ -73,6 +74,7 @@ export const topicRemove = post("/api/topic/remove");
 export const topicList = get("/api/topic/list");
 export const topicFetch = get("/api/topic/fetchById");
 export const questionReviewList = get("/api/question/toReview");
+export const questionFrozen = get('/api/activityLog/questionsFreezedByMe')
 
 export const Roles = {
     ADMIN: 0,

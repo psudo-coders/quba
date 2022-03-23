@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import Page from "../../components/Page/Page";
-import Button from "../../components/Inputs/Button";
-import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import SearchBar from "../../components/SearchBar/SearchBar";
 import Table from "../../components/Table/Table";
 import TableHead from "../../components/Table/TableHead";
@@ -9,24 +7,24 @@ import TableHeadRow from "../../components/Table/TableHeadRow";
 import TableBody from "../../components/Table/TableBody";
 import TableRow from "../../components/Table/TableRow";
 import { FiFile } from "react-icons/fi";
-import FreezeQuestionPopup from "./FreezeQuestionPopup";
 import RemoveQuestionPopup from "./RemoveQuestionPopup";
 import Dropdown from "../../components/Dropdown/Dropdown";
 import Loading from "../../components/Loading/Loading";
 import ActionOptions from "../../components/ActionOptions/ActionOptions";
 import { useNavigate } from "react-router-dom";
-import { useQuery } from 'react-query';
-import { questionReviewList } from "../../api";
+import { useMutation, useQuery } from "react-query";
+import { questionReviewList, questionUpdate } from "../../api";
+import ViewQuestionPopup from "../Submitter/ViewQuestionPopup";
+import { statuses } from "../../config/difficulties";
 
 function ReviewQuestions(props) {
     const { sidebarOptions } = props;
 
-    const [freezePopupOpen, setFreezePopupOpen] = useState(false);
     const [removePopupOpen, setRemovePopupOpen] = useState(false);
+    const [questionPopupOpen, setQuestionPopupOpen] = useState(false);
+    const [selectedQuestion, setSelectedQuestion] = useState({});
 
-    const [selectedStatus, setSelectedStatus] = useState(-1);
-
-    const statusOptions = ["Option 1", "Option 2"];
+    const [status, setStatus] = useState(-1);
 
     const goto = useNavigate();
 
@@ -38,11 +36,27 @@ function ReviewQuestions(props) {
         setRemovePopupOpen(true);
     };
 
-    const onFreeze = () => {
-        setFreezePopupOpen(true);
+    const handleQuestionClick = (question) => {
+        setSelectedQuestion(question);
+        setQuestionPopupOpen(true);
     };
 
-    const { data } = useQuery('questionReviewList', () => questionReviewList());
+    const { mutate: freezeQuestion } = useMutation(
+        (id) => questionUpdate({ id, status: "freeze" }),
+        {
+            onSuccess: () => {
+                console.log("success freeze");
+            },
+        }
+    );
+
+    const onFreeze = (id) => {
+        console.log("freeze");
+        freezeQuestion(id);
+        window.location.reload();
+    };
+
+    const { data } = useQuery("questionReviewList", questionReviewList);
     if (!data) return <Loading />;
 
     return (
@@ -54,16 +68,22 @@ function ReviewQuestions(props) {
             dropdowns={
                 <Dropdown
                     name={"Status"}
-                    options={statusOptions}
-                    selected={selectedStatus}
-                    setSelected={setSelectedStatus}
+                    options={statuses}
+                    selected={status}
+                    setSelected={setStatus}
                 />
             }
         >
             <Table>
                 <TableHead>
                     <TableHeadRow
-                        values={["Question ID", "Subject", "Topic", "Action"]}
+                        values={[
+                            "Question ID",
+                            "Difficulty",
+                            "Subject",
+                            "Topic",
+                            "Action",
+                        ]}
                     />
                 </TableHead>
 
@@ -74,51 +94,51 @@ function ReviewQuestions(props) {
                         <>
                             <TableRow
                                 key={i}
+                                onClick={() => handleQuestionClick(question)}
                                 values={[
                                     <>
                                         <FiFile />
                                         <span>{question._id.substr(-8)}</span>
                                     </>,
+                                    question.difficulty,
                                     question.subject,
                                     question.topic,
                                     <ActionOptions
                                         onEdit={onEdit}
                                         onRemove={onRemove}
-                                        onFreeze={onFreeze}
+                                        onFreeze={() => onFreeze(question._id)}
                                     />,
                                 ]}
                             />
 
-                            <tr>
-                                <td colSpan={5}>
-                                    <div className="question-description">
-                                        <p>Question: {question.statement.text}</p>
-                                        {
-                                            question.options.map((option, i) => (
-                                                <div>
-                                                    <span>{i + 1}.</span>
-                                                    <span>{option.text}</span>
-                                                </div>
-                                            ))
-                                        }
-                                    </div>
-                                </td>
-                            </tr>
+                            {/*<tr>*/}
+                            {/*    <td colSpan={5}>*/}
+                            {/*        <div className="question-description">*/}
+                            {/*            <p>*/}
+                            {/*                Question: {question.statement.text}*/}
+                            {/*            </p>*/}
+                            {/*            {question.options.map((option, i) => (*/}
+                            {/*                <div>*/}
+                            {/*                    <span>{i + 1}.</span>*/}
+                            {/*                    <span>{option.text}</span>*/}
+                            {/*                </div>*/}
+                            {/*            ))}*/}
+                            {/*        </div>*/}
+                            {/*    </td>*/}
+                            {/*</tr>*/}
                         </>
                     ))}
                 </TableBody>
             </Table>
 
-            {/* TODO: real pagination */}
-            <div className="pagination">
-                <Button label={"Prev"} icon={<FaArrowLeft />} alt />
-                <Button label={"Next"} icon={<FaArrowRight />} alt />
-            </div>
-            {freezePopupOpen && (
-                <FreezeQuestionPopup setOpen={setFreezePopupOpen} />
-            )}
             {removePopupOpen && (
                 <RemoveQuestionPopup setOpen={setRemovePopupOpen} />
+            )}
+            {questionPopupOpen && (
+                <ViewQuestionPopup
+                    question={selectedQuestion}
+                    setOpen={setQuestionPopupOpen}
+                />
             )}
         </Page>
     );

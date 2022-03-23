@@ -22,3 +22,9 @@
 .pagination .input-btn {
     margin: 20px 5px;
 }
+
+.blue-text {
+    color: #2B6DE6;
+    font-weight: 600;
+    cursor: pointer;
+}

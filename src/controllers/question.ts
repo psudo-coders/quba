@@ -41,13 +41,13 @@ async function info(req: Request, res: Response) {
 async function list(req: Request, res: Response) {
     if ((req.user as UserDocument).role === ROLES.Admin) {
         const questions = await Question.find().exec();
-        res.json(await Promise.all(questions.map(preprocessQuestion)));
+        res.json(await Promise.all(questions.map(x => preprocessQuestion(x.toObject()))));
     } else {
         // find questions of the user
         const questions = await Question.find({
             user: (req.user as UserDocument)._id,
         }).exec();
-        res.json(await Promise.all(questions.map(preprocessQuestion)));
+        res.json(await Promise.all(questions.map(x => preprocessQuestion(x.toObject()))));
     }
 }
 
@@ -83,20 +83,20 @@ async function remove(req: Request, res: Response) {
 }
 
 // TODO: types go brr
-export async function preprocessQuestion(question: QuestionDocument): Promise<any> {
+export async function preprocessQuestion(question: any): Promise<any> {
     const { subject, topic } = question;
 
     try {
         const subject_val = await Subject.findById(subject);
         const topic_val = await Topic.findById(topic);
         return {
-            ...question.toObject(),
+            ...question,
             subject: subject_val.name,
             topic: topic_val.name,
         };
-    } catch(e) {
+    } catch (e) {
         return {
-            ...question.toObject(),
+            ...question,
             subject: "invalid subject",
             topic: "invalid topic",
         }
@@ -106,7 +106,7 @@ export async function preprocessQuestion(question: QuestionDocument): Promise<an
 async function toReview(_req: Request, res: Response) {
     const questions = await Question.find({ status: "pending" }).sort({ createdAt: 1 });
     // TODO: try avoid more than one review per question collision
-    res.json(await Promise.all(questions.map(preprocessQuestion)));
+    res.json(await Promise.all(questions.map(x => preprocessQuestion(x.toObject()))));
 }
 
 export default Router()

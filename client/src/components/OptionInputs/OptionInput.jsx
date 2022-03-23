@@ -5,7 +5,7 @@ import { ImAttachment } from "react-icons/im";
 import "./OptionInput.css";
 
 function OptionInput(props) {
-    const { label, noOptions, ...passingProps } = props;
+    const { label, noOptions, onClick, selected, ...passingProps } = props;
 
     return (
         <div className={"option-input-wrapper"}>
@@ -16,11 +16,22 @@ function OptionInput(props) {
                     placeholder={"Enter option"}
                     {...passingProps}
                 />
-                {!noOptions && <FaCheck className={"option-tick"} />}
+                {!noOptions && (
+                    <FaCheck
+                        onClick={onClick}
+                        className={
+                            "option-tick" + (selected ? " selected" : "")
+                        }
+                    />
+                )}
                 {!noOptions && <ImAttachment className={"option-attach"} />}
             </div>
         </div>
     );
 }
+
+OptionInput.defaultProps = {
+    selected: false,
+};
 
 export default OptionInput;

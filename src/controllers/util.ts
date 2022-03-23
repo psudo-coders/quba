@@ -6,6 +6,7 @@ export function handleError(inner: (req: Request, res: Response) => Promise<void
             await inner(req, res);
         } catch (e) {
             // everything is bad request
+            console.log(e);
             res.status(400).json(e);
         }
     }
