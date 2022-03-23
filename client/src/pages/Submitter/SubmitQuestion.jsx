@@ -26,7 +26,7 @@ function SubmitQuestion(props) {
         difficulty: -1,
         statement: { text: "" },
         solution: { text: "" },
-        correctAnswer: 1,
+        correctAnswer: 0,
         options: [{ id: 0, text: "" }],
     });
 
@@ -37,6 +37,12 @@ function SubmitQuestion(props) {
                 ...prev,
                 options: [...prev.options, { id: prevLabel + 1, text: "" }],
             };
+        });
+    };
+
+    const setCorrectAnswer = (i) => {
+        setQData((prev) => {
+            return { ...prev, correctAnswer: i };
         });
     };
 
@@ -140,7 +146,7 @@ function SubmitQuestion(props) {
                 />
                 {qData.options.map((option, i) => (
                     <OptionInput
-                        label={option.id}
+                        label={String.fromCharCode(65 + option.id)}
                         value={option.value}
                         onChange={(e) =>
                             setQData((prev) => {
@@ -149,6 +155,8 @@ function SubmitQuestion(props) {
                                 return { ...prev, options: tempOptions };
                             })
                         }
+                        onClick={() => setCorrectAnswer(i)}
+                        selected={qData.correctAnswer === i}
                     />
                 ))}
                 <p className="add-option" onClick={addOption}>
