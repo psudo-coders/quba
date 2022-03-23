@@ -4,11 +4,13 @@ import CheckboxOption from "./CheckboxOption";
 import "./CheckboxOptions.css";
 
 function CheckboxOptions(props) {
-    const { options, label, selectedIdx, onOptionClick } = props;
+    const { options, label, selectedIdxs, onOptionClick } = props;
 
     const handleOptionClick = (i) => {
         onOptionClick(i);
     };
+
+    console.log(selectedIdxs);
 
     return (
         <div className={"checkbox-options"}>
@@ -18,7 +20,7 @@ function CheckboxOptions(props) {
                     key={i}
                     id={i}
                     {...o}
-                    selected={i === selectedIdx}
+                    selected={selectedIdxs.includes(i)}
                     onClick={handleOptionClick}
                 />
             ))}
