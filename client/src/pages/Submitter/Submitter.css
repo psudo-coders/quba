@@ -18,6 +18,7 @@ html {
 
 .dropdowns-container {
     display: flex;
+    flex-basis: auto;
 }
 
 .dropdowns-container .dropdown {
