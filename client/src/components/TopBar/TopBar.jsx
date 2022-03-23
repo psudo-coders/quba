@@ -12,8 +12,6 @@ function TopBar(props) {
 
     const goto = useNavigate();
 
-    console.log(userData);
-
     return (
         <div className={"topbar"}>
             {search && search}
