@@ -24,6 +24,7 @@
 
 .dropdown p {
     margin: 0;
+    cursor: pointer;
 }
 
 .dropdown-title {
@@ -46,6 +47,8 @@
 .dropdown-options p {
     font-size: 15px;
     padding: 5px;
+
+    cursor: pointer;
 }
 
 .dropdown-options p:hover {
