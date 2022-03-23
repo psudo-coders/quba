@@ -12,3 +12,11 @@ body, #root, .App, .blue-screen {
     height: 100vh;
     width: 100vw;
 }
+
+#root {
+    overflow: hidden;
+}
+
+.App {
+    overflow: auto;
+}
