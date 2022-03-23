@@ -1,6 +1,17 @@
 /* TODO: soon [tm] style this file */
 .question-paper {
     overflow-x: hidden;
+    padding-top: 30px;
+}
+
+.question-paper-container {
+    padding: 0 50px;
+}
+
+.question-paper-header {
+    display: flex;
+    justify-content: center;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.15);
 }
 
 .question-paper-body {
@@ -13,17 +24,43 @@
     max-width: 90%;
 }
 
-.question-header {
-}
-
 .options {
     margin-top: 10px;
     display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+    flex-direction: column;
 }
 
 .option {
+    display: flex;
+    align-items: center;
+}
+
+.option > p {
+    margin: 0;
+    padding: 5px 10px;
+    border-radius: 5px;
     width: 50%;
 }
+
+.option-detail {
+    box-sizing: border-box;
+    border-radius: 5px;
+    padding: 8px 10px;
+
+}
+
+.question-no {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.question-statement {
+    padding: 10px 12px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    box-sizing: border-box;
+    border-radius: 5px;
+    margin-bottom: 0;
+    width: 100%;
+}
+
 
