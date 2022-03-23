@@ -14,9 +14,10 @@ const dummyData = {
     difficulty: ["Easy", "Medium", "Hard"],
 };
 
+
 function SubmitQuestion(props) {
     const { sidebarOptions } = props;
-
+    const [popupOpen, setPopupOpen] = useState(false);
 
     const [qData, setQData] = useState({
         subject: "6239e530f6554077a49bf55f",
@@ -57,6 +58,17 @@ function SubmitQuestion(props) {
     const doSubmit = () => {
         console.log(qData);
         SubmitQuestion.mutate(qData);
+        setPopupOpen(true);
+        setQData({
+            subject: "6239e530f6554077a49bf55f",
+            topic: "6239e584f6554077a49bf59b",
+            // difficulty: -1,
+            statement: { text: "" },
+            solution: { text: "" },
+            correctAnswer: 1,
+            options: [{ id: 1, text: "" }],
+
+        })
     };
 
     return (
@@ -99,14 +111,15 @@ function SubmitQuestion(props) {
                 </div>
             }
         >
-            {SubmitQuestion.isSuccess && (
+            {SubmitQuestion.isSuccess && popupOpen && (
                 <PopupAlert
                     className={"remove-question"}
                     heading={"Submit Question"}
                     middle={<FaCheck className={"eraser"} />}
                     bottom={"Question submitted"}
+                    setOpen={setPopupOpen}
                 />
-            )}
+            ) }
             <div className={"submit-question-form"}>
                 <AttachTextArea
                     heading={"Enter question details"}
