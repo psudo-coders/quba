@@ -35,6 +35,10 @@ function ViewQuestionPopup({ question, setOpen }) {
                         value={option.text}
                     />
                 ))}
+                <p className="blue-text">
+                    Correct Answer:
+                    {" " + String.fromCharCode(65 + question.correctAnswer)}
+                </p>
                 <AttachTextArea
                     heading={"Enter solution details"}
                     placeholder={"Question solution"}

@@ -6,23 +6,40 @@ import TableHead from "../../components/Table/TableHead";
 import TableHeadRow from "../../components/Table/TableHeadRow";
 import TableBody from "../../components/Table/TableBody";
 import { FiFile } from "react-icons/fi";
-import Button from "../../components/Inputs/Button";
-import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import SearchBar from "../../components/SearchBar/SearchBar";
 import Dropdown from "../../components/Dropdown/Dropdown";
 import ViewQuestionPopup from "./ViewQuestionPopup";
+import { difficulties, statuses } from "../../config/difficulties";
+import useDropdownData from "../../hooks/useDropdownData";
+import { subjectList, topicList, questionList } from "../../api";
+import { useQuery } from "react-query";
+import Loading from "../../components/Loading/Loading";
 
 function YourQuestions(props) {
     const { sidebarOptions } = props;
 
-    const [selectedStatus, setSelectedStatus] = useState(-1);
+    const [status, setStatus] = useState(-1);
+    const [subject, setSubject] = useState(-1);
+    const [topic, setTopic] = useState(-1);
+    const [topicsData, tIsSuccess] = useDropdownData("topicList", topicList);
+    const [subjectsData, sIsSuccess] = useDropdownData(
+        "subjectList",
+        subjectList
+    );
 
-    const statusOptions = ["Option 1", "Option 2"];
+    const [questionPopupOpen, setQuestionPopupOpen] = useState(false);
+    const [selectedQuestion, setSelectedQuestion] = useState({});
 
-    const [popupOpen, setPopupOpen] = useState(false);
+    const { data: questions, isSuccess } = useQuery(
+        "questionList",
+        questionList
+    );
+    if (!questions) return <Loading />;
+    console.log(questions);
 
-    const handleQuestionClick = () => {
-        setPopupOpen(true);
+    const handleQuestionClick = (question) => {
+        setSelectedQuestion(question);
+        setQuestionPopupOpen(true);
     };
 
     return (
@@ -32,26 +49,33 @@ function YourQuestions(props) {
             subHeading={"Your question description"}
             search={<SearchBar placeholder={"Search Question"} />}
             dropdowns={
-                <div className={"dropdowns-container"}>
-                    <Dropdown
-                        name={"Status"}
-                        options={statusOptions}
-                        selected={selectedStatus}
-                        setSelected={setSelectedStatus}
-                    />
-                    <Dropdown
-                        name={"Topic"}
-                        options={statusOptions}
-                        selected={selectedStatus}
-                        setSelected={setSelectedStatus}
-                    />
-                    <Dropdown
-                        name={"Difficulty"}
-                        options={statusOptions}
-                        selected={selectedStatus}
-                        setSelected={setSelectedStatus}
-                    />
-                </div>
+                sIsSuccess &&
+                tIsSuccess && (
+                    <div className={"dropdowns-container"}>
+                        <Dropdown
+                            name={"Status"}
+                            options={statuses}
+                            selected={status}
+                            setSelected={setStatus}
+                        />
+                        <div className={"dropdowns-container"}>
+                            <Dropdown
+                                name={"Subject"}
+                                options={subjectsData.map(
+                                    (subject) => subject.name
+                                )}
+                                selected={subject}
+                                setSelected={setSubject}
+                            />
+                            <Dropdown
+                                name={"Topic"}
+                                options={topicsData.map((topic) => topic.name)}
+                                selected={topic}
+                                setSelected={setTopic}
+                            />
+                        </div>
+                    </div>
+                )
             }
         >
             <Table>
@@ -67,24 +91,30 @@ function YourQuestions(props) {
                     />
                 </TableHead>
                 <TableBody>
-                    {[0, 0, 0, 0, 0].map((v, i) => (
+                    {questions.map((question, i) => (
                         <TableRow
                             key={i}
-                            onClick={handleQuestionClick}
+                            onClick={() => handleQuestionClick(question)}
                             values={[
                                 <>
                                     <FiFile />
-                                    <span>
-                                        Problem statement adsklaksd asd
-                                        asdasfsdsfdsf
-                                    </span>
+                                    <span>{question.statement.text}</span>
                                 </>,
-                                "Hard",
-                                "English",
-                                "Grammar",
+                                difficulties[question.difficulty],
+                                question.subject,
+                                question.topic,
                                 <>
-                                    <span className={"question-status"} />
-                                    <span>Approved</span>
+                                    <span
+                                        className={
+                                            "question-status " + question.status
+                                        }
+                                    />
+                                    <span>
+                                        {question.status
+                                            .charAt(0)
+                                            .toUpperCase() +
+                                            question.status.slice(1)}
+                                    </span>
                                 </>,
                             ]}
                         />
@@ -95,7 +125,12 @@ function YourQuestions(props) {
                 <Button label={"Prev"} icon={<FaArrowLeft />} alt />
                 <Button label={"Next"} icon={<FaArrowRight />} alt />
             </div> */}
-            {popupOpen && <ViewQuestionPopup setOpen={setPopupOpen} />}
+            {questionPopupOpen && (
+                <ViewQuestionPopup
+                    question={selectedQuestion}
+                    setOpen={setQuestionPopupOpen}
+                />
+            )}
         </Page>
     );
 }
