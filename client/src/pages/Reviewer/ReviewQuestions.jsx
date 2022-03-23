@@ -46,6 +46,7 @@ function ReviewQuestions(props) {
     const onFreeze = (id) => {
         console.log("freeze");
         freezeQuestion(id);
+        window.location.reload();
     };
 
     const { data } = useQuery("questionReviewList", questionReviewList);
