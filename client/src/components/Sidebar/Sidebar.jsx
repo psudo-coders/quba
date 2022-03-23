@@ -15,10 +15,6 @@ function Sidebar(props) {
             label: "Profile",
             link: `${options[0]?.link}/profile`,
         },
-        {
-            label: "Logout",
-            link: "",
-        },
     ];
 
     return (
@@ -58,6 +54,19 @@ function Sidebar(props) {
                         link={option.link}
                     />
                 ))}
+                <SidebarOption
+                    label={"Logout"}
+                    isSelected={false}
+                    onClick={() => {
+                        fetch("/api/logout", {
+                            method: "POST",
+                            credentials: "include",
+                        })
+                        .then(() => {
+                            window.location.href = "/login";
+                        });
+                    }}
+                />
             </div>
         </div>
     );
