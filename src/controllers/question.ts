@@ -83,7 +83,7 @@ async function remove(req: Request, res: Response) {
 }
 
 // TODO: types go brr
-async function preprocessQuestion(question: QuestionDocument): Promise<any> {
+export async function preprocessQuestion(question: QuestionDocument): Promise<any> {
     const { subject, topic } = question;
 
     try {
