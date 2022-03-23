@@ -12,6 +12,7 @@ import { FiFile } from "react-icons/fi";
 import FreezeQuestionPopup from "./FreezeQuestionPopup";
 import RemoveQuestionPopup from "./RemoveQuestionPopup";
 import Dropdown from "../../components/Dropdown/Dropdown";
+import Loading from "../../../components/ActionOptions/Loading";
 import ActionOptions from "../../components/ActionOptions/ActionOptions";
 import { useNavigate } from "react-router-dom";
 import { useQuery } from 'react-query';
@@ -42,8 +43,7 @@ function ReviewQuestions(props) {
     };
 
     const { data } = useQuery('questionReviewList', () => questionReviewList());
-    // TODO: make a elegant loading component
-    if (!data) return <div>Loading...</div>;
+    if (!data) return <Loading />;
 
     return (
         <Page

@@ -8,8 +8,7 @@ import TableHead from "../../../components/Table/TableHead";
 import TableHeadRow from "../../../components/Table/TableHeadRow";
 import TableBody from "../../../components/Table/TableBody";
 import TableRow from "../../../components/Table/TableRow";
-import { FiFile } from "react-icons/fi";
-import ActionOptions from "../../../components/ActionOptions/ActionOptions";
+import Loading from "../../../components/Loading/Loading";
 import { useNavigate } from "react-router-dom";
 import { useQuery } from "react-query"
 import { subjectList } from "../../../api";
@@ -29,7 +28,7 @@ function ViewSubjects(props) {
 
     const { data, isLoading } = useQuery("subjects", subjectList);
     if (isLoading) {
-        return <div>Loading...</div>;
+        return <Loading />;
     }
 
     return (

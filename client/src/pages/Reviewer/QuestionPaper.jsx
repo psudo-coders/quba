@@ -1,4 +1,5 @@
 import "./QuestionPaper.css"
+import Loading from "../../../components/ActionOptions/Loading";
 import { useQuery } from "react-query"
 import { testGenerate } from "../../api"
 
@@ -10,8 +11,7 @@ export default function QuestionPaper() {
         refetchOnWindowFocus: false,
     });
     if (isLoading) {
-        // TODO: loading screen
-        return <div>Loading...</div>
+        return <Loading />
     }
     return (
         // TODO: handle answer sheet printing?
