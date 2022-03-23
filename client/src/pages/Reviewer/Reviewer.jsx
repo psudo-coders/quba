@@ -1,10 +1,9 @@
-import React from "react";
-import { Route, Routes } from "react-router-dom";
+import React, { useContext, useEffect } from "react";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import { FaCheck } from "react-icons/fa";
 
 import "./Reviewer.css";
 import ReviewQuestions from "./ReviewQuestions";
-import GenerateQuestionPaper from "./GenerateQuestionPaper";
 import QuestionPaper from "./QuestionPaper";
 
 import CreateTopic from "./Topics/CreateTopic";
@@ -18,6 +17,8 @@ import EditTopic from "./Topics/EditTopic";
 import FreezedQuestions from "./FreezedQuestions";
 import Profile from "./Profile/Profile";
 import EditQuestion from "./EditQuestion";
+import { UserContext } from "../../context/UserContext";
+import { Roles } from "../../api";
 
 export const sidebarOptions = [
     {
@@ -54,6 +55,15 @@ export const sidebarOptions = [
 ];
 
 function Reviewer(props) {
+    const [userData] = useContext(UserContext);
+    const goto = useNavigate();
+
+    useEffect(() => {
+        if (userData?.role === Roles.SUBMITTER) {
+            goto("/");
+        }
+    }, [userData?.role]);
+
     return (
         <Routes>
             <Route
@@ -66,9 +76,7 @@ function Reviewer(props) {
             />
             <Route
                 path="/question/generate"
-                element={
-                    <QuestionPaper sidebarOptions={sidebarOptions} />
-                }
+                element={<QuestionPaper sidebarOptions={sidebarOptions} />}
             />
             <Route
                 path="/question/edit"
