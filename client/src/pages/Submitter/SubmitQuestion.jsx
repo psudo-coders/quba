@@ -5,18 +5,19 @@ import { FaArrowRight, FaCheck } from "react-icons/fa";
 import Button from "../../components/Inputs/Button";
 import Page from "../../components/Page/Page";
 import Dropdown from "../../components/Dropdown/Dropdown";
-import { useMutation } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import PopupAlert from "../../components/PopupAlert/PopupAlert";
-import { questionCreate } from "../../api";
+import { questionCreate, subjectList } from "../../api";
 
 const dummyData = {
-    subjects: ["Subject 1", "Subject 2"],
     topics: ["Topic 1", "Topic 2"],
     difficulty: ["Easy", "Medium", "Hard"],
 };
 
 function SubmitQuestion(props) {
     const { sidebarOptions } = props;
+
+
     const [qData, setQData] = useState({
         subject: "6239e530f6554077a49bf55f",
         topic: "6239e584f6554077a49bf59b",
@@ -37,6 +38,8 @@ function SubmitQuestion(props) {
             };
         });
     };
+
+    const {data: subjects} = useQuery("subjectList", subjectList);
 
     const SubmitQuestion = useMutation(
         questionCreate,

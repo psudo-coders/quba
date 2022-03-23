@@ -1,5 +1,5 @@
 import "./QuestionPaper.css"
-import Loading from "../../../components/ActionOptions/Loading";
+import Loading from "../../components/Loading/Loading"
 import { useQuery } from "react-query"
 import { testGenerate } from "../../api"
 

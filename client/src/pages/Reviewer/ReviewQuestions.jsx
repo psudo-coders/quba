@@ -12,7 +12,7 @@ import { FiFile } from "react-icons/fi";
 import FreezeQuestionPopup from "./FreezeQuestionPopup";
 import RemoveQuestionPopup from "./RemoveQuestionPopup";
 import Dropdown from "../../components/Dropdown/Dropdown";
-import Loading from "../../../components/ActionOptions/Loading";
+import Loading from "../../components/Loading/Loading";
 import ActionOptions from "../../components/ActionOptions/ActionOptions";
 import { useNavigate } from "react-router-dom";
 import { useQuery } from 'react-query';
