@@ -1,19 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import OptionInput from "../../components/OptionInputs/OptionInput";
 import AttachTextArea from "../../components/AttachTextArea/AttachTextArea";
 import { FaArrowRight, FaCheck } from "react-icons/fa";
 import Button from "../../components/Inputs/Button";
 import Page from "../../components/Page/Page";
 import Dropdown from "../../components/Dropdown/Dropdown";
-import { useMutation, useQuery } from "react-query";
+import { useMutation } from "react-query";
 import PopupAlert from "../../components/PopupAlert/PopupAlert";
 import { questionCreate, subjectList, topicList } from "../../api";
 import useDropdownData from "../../hooks/useDropdownData";
-
-const dummyData = {
-    topics: ["Topic 1", "Topic 2"],
-    difficulty: ["Easy", "Medium", "Hard"],
-};
+import { difficulties } from "../../config/difficulties";
 
 function SubmitQuestion(props) {
     const { sidebarOptions } = props;
@@ -101,7 +97,7 @@ function SubmitQuestion(props) {
                         />
                         <Dropdown
                             name={"Difficulty"}
-                            options={dummyData.difficulty}
+                            options={difficulties}
                             selected={qData.difficulty}
                             setSelected={(id) => {
                                 setQData((prev) => {
