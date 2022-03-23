@@ -94,7 +94,7 @@ function Reviewer(props) {
                 element={<CreateTopic sidebarOptions={sidebarOptions} />}
             />
             <Route
-                path="/topic/edit"
+                path="/topic/edit/:topicId"
                 element={<EditTopic sidebarOptions={sidebarOptions} />}
             />
             <Route
@@ -106,7 +106,7 @@ function Reviewer(props) {
                 element={<CreateSubject sidebarOptions={sidebarOptions} />}
             />
             <Route
-                path="/subject/edit"
+                path="/subject/edit/:subjectId"
                 element={<EditSubject sidebarOptions={sidebarOptions} />}
             />
             <Route

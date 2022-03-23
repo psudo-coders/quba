@@ -10,19 +10,43 @@ import TableBody from "../../../components/Table/TableBody";
 import TableRow from "../../../components/Table/TableRow";
 import Loading from "../../../components/Loading/Loading";
 import { useNavigate } from "react-router-dom";
-import { useQuery } from "react-query"
-import { subjectList } from "../../../api";
+import { useMutation, useQuery } from "react-query";
+import { subjectList, subjectRemove } from "../../../api";
+import ActionOptions from "../../../components/ActionOptions/ActionOptions";
+import SuccessAlert from "../../../components/PopupAlert/SuccessAlert";
+import ErrorAlert from "../../../components/PopupAlert/ErrorAlert";
+
+import { useQueryClient } from "react-query";
 
 function ViewSubjects(props) {
     const { sidebarOptions } = props;
 
     const handleSubjectClick = () => {};
 
-    const onEdit = () => {
-        goto("/reviewer/subject/edit");
+    const onEdit = (subjectId) => {
+        goto("/reviewer/subject/edit/" + subjectId);
     };
 
-    const onRemove = () => {};
+    const queryClient = useQueryClient();
+
+    const {
+        isError,
+        isSuccess,
+        reset,
+        error,
+        mutate: send,
+    } = useMutation(subjectRemove);
+
+    const onRemove = (subjectId) => {
+        send(
+            { id: subjectId },
+            {
+                onSuccess: () => {
+                    queryClient.invalidateQueries("subjects");
+                },
+            }
+        );
+    };
 
     const goto = useNavigate();
 
@@ -48,32 +72,47 @@ function ViewSubjects(props) {
             <Table>
                 <TableHead>
                     <TableHeadRow
-                        values={["Subject Name"]}
+                        values={["Subject ID", "Subject Name", "Action"]}
                     />
                 </TableHead>
                 <TableBody>
                     {data.map((subject, i) => (
                         <TableRow
-                            key={i}
+                            key={subject._id}
                             onClick={handleSubjectClick}
                             values={[
+                                subject._id,
                                 subject.name,
-                                // TODO: reconsider this
-                                /*
                                 <ActionOptions
-                                    onEdit={onEdit}
-                                    onRemove={onRemove}
+                                    onEdit={() => onEdit(subject._id)}
+                                    onRemove={() => onRemove(subject._id)}
                                 />,
-                                */
                             ]}
                         />
                     ))}
                 </TableBody>
             </Table>
-            {/* <div className="pagination">
+            <div className="pagination">
                 <Button label={"Prev"} icon={<FaArrowLeft />} alt />
                 <Button label={"Next"} icon={<FaArrowRight />} alt />
-            </div> */}
+            </div>
+            {isSuccess && (
+                <SuccessAlert
+                    heading={"Subject removed"}
+                    bottom={"Subject removed successfully"}
+                    reset={() => {
+                        goto("/reviewer/subject/view");
+                        reset();
+                    }}
+                />
+            )}
+            {isError && (
+                <ErrorAlert
+                    heading={"Subject removal failed"}
+                    bottom={error.toString()}
+                    reset={reset}
+                />
+            )}
         </Page>
     );
 }

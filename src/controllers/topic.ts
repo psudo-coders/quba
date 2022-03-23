@@ -1,5 +1,5 @@
 import { Request, Response, Router } from "express";
-import { Topic } from "../models/Topic"
+import { Topic } from "../models/Topic";
 import { logActivity } from "./activityLog";
 import { handleError } from "./util";
 
@@ -17,6 +17,11 @@ async function list(_req: Request, res: Response) {
     res.json(topics);
 }
 
+async function fetchById(req: Request, res: Response) {
+    const topic = await Topic.findOne({ _id: req.query.topicId }).exec();
+    res.json(topic);
+}
+
 async function update(req: Request, res: Response) {
     const id = req.body.id;
     delete req.body.id;
@@ -27,7 +32,8 @@ async function update(req: Request, res: Response) {
         data: old,
         changes: req.body,
     });
-    res.sendStatus(200);
+
+    res.json({ id });
 }
 
 async function remove(req: Request, res: Response) {
@@ -39,12 +45,13 @@ async function remove(req: Request, res: Response) {
         action: "delete",
         data: topic,
     });
-    res.sendStatus(200);
+
+    res.json({ id });
 }
 
 export default Router()
     .post("/create", handleError(create))
     .get("/list", handleError(list))
-    .post("/update", isAuthorized(ROLES.Admin), handleError(update))
-    .post("/remove", isAuthorized(ROLES.Admin), handleError(remove));
-
+    .get("/fetchById", handleError(fetchById))
+    .post("/update", isAuthorized(ROLES.Reviewer), handleError(update))
+    .post("/remove", isAuthorized(ROLES.Reviewer), handleError(remove));
