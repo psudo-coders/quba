@@ -9,11 +9,27 @@ html {
 }
 
 .question-status {
-    background: #2CCAA9;
+
     border-radius: 20px;
 
     width: 24px;
     height: 5px;
+}
+
+.question-status.freeze {
+    background: #2CCAA9;
+}
+
+.question-status.pending {
+    background: #EBFF08;
+}
+
+.question-status.duplicate {
+    background: #FFA800;
+}
+
+.question-status.remove {
+    background: #CA2C2C;
 }
 
 .dropdowns-container {
