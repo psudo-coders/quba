@@ -8,6 +8,7 @@ const subjectSchema = new mongoose.Schema<SubjectDocument>({
     name: {
         type: String,
         required: true,
+        unique: true,
     },
 });
 

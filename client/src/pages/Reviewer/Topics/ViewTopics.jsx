@@ -8,22 +8,53 @@ import TableHead from "../../../components/Table/TableHead";
 import TableHeadRow from "../../../components/Table/TableHeadRow";
 import TableBody from "../../../components/Table/TableBody";
 import TableRow from "../../../components/Table/TableRow";
-import { FiFile } from "react-icons/fi";
 import ActionOptions from "../../../components/ActionOptions/ActionOptions";
 import { useNavigate } from "react-router-dom";
+import { useMutation, useQuery } from "react-query";
+import { topicRemove, topicList } from "../../../api";
+import Loading from "../../../components/Loading/Loading";
+
+import { useQueryClient } from "react-query";
+import SuccessAlert from "../../../components/PopupAlert/SuccessAlert";
+import ErrorAlert from "../../../components/PopupAlert/ErrorAlert";
 
 function ViewTopics(props) {
     const { sidebarOptions } = props;
 
     const handleTopicClick = () => {};
 
-    const onEdit = () => {
-        goto("/reviewer/topic/edit");
+    const queryClient = useQueryClient();
+
+    const onEdit = (topicId) => {
+        goto("/reviewer/topic/edit/" + topicId);
     };
 
-    const onRemove = () => {};
+    const {
+        isError,
+        isSuccess,
+        reset,
+        error,
+        mutate: send,
+    } = useMutation(topicRemove);
+
+    const onRemove = (topicId) => {
+        send(
+            { id: topicId },
+            {
+                onSuccess: () => {
+                    queryClient.invalidateQueries("topics");
+                },
+            }
+        );
+    };
 
     const goto = useNavigate();
+
+    const { data, isLoading } = useQuery("topics", topicList);
+
+    if (isLoading) {
+        return <Loading />;
+    }
 
     return (
         <Page
@@ -46,20 +77,17 @@ function ViewTopics(props) {
                     />
                 </TableHead>
                 <TableBody>
-                    {[0, 0, 0, 0, 0].map((v, i) => (
+                    {data.map((topic, i) => (
                         <TableRow
-                            key={i}
+                            key={topic._id}
                             onClick={handleTopicClick}
                             values={[
-                                <>
-                                    <FiFile />
-                                    <span>#17116516</span>
-                                </>,
-                                "Grammar",
-                                "English",
+                                topic._id,
+                                topic.name,
+                                topic.subject,
                                 <ActionOptions
-                                    onEdit={onEdit}
-                                    onRemove={onRemove}
+                                    onEdit={() => onEdit(topic._id)}
+                                    onRemove={() => onRemove(topic._id)}
                                 />,
                             ]}
                         />
@@ -70,6 +98,23 @@ function ViewTopics(props) {
                 <Button label={"Prev"} icon={<FaArrowLeft />} alt />
                 <Button label={"Next"} icon={<FaArrowRight />} alt />
             </div>
+            {isSuccess && (
+                <SuccessAlert
+                    heading={"Topic removed"}
+                    bottom={"Topic removed successfully"}
+                    reset={() => {
+                        goto("/reviewer/topic/view");
+                        reset();
+                    }}
+                />
+            )}
+            {isError && (
+                <ErrorAlert
+                    heading={"Topic removal failed"}
+                    bottom={error.toString()}
+                    reset={reset}
+                />
+            )}
         </Page>
     );
 }
