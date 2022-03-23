@@ -122,11 +122,6 @@ function ReviewQuestions(props) {
                 </TableBody>
             </Table>
 
-            {/* TODO: real pagination */}
-            {/* <div className="pagination">
-                <Button label={"Prev"} icon={<FaArrowLeft />} alt />
-                <Button label={"Next"} icon={<FaArrowRight />} alt />
-            </div>
             {removePopupOpen && (
                 <RemoveQuestionPopup setOpen={setRemovePopupOpen} />
             )}
