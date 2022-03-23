@@ -40,6 +40,7 @@
     top: 40px;
     box-sizing: border-box;
     color: #7C7F8E;
+    z-index: 1;
 }
 
 .dropdown-options p {

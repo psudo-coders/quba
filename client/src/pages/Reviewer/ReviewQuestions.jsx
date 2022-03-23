@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import Page from "../../components/Page/Page";
-import Button from "../../components/Inputs/Button";
-import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import SearchBar from "../../components/SearchBar/SearchBar";
 import Table from "../../components/Table/Table";
 import TableHead from "../../components/Table/TableHead";
@@ -9,7 +7,6 @@ import TableHeadRow from "../../components/Table/TableHeadRow";
 import TableBody from "../../components/Table/TableBody";
 import TableRow from "../../components/Table/TableRow";
 import { FiFile } from "react-icons/fi";
-import FreezeQuestionPopup from "./FreezeQuestionPopup";
 import RemoveQuestionPopup from "./RemoveQuestionPopup";
 import Dropdown from "../../components/Dropdown/Dropdown";
 import Loading from "../../components/Loading/Loading";
@@ -17,11 +14,14 @@ import ActionOptions from "../../components/ActionOptions/ActionOptions";
 import { useNavigate } from "react-router-dom";
 import { useMutation, useQuery } from "react-query";
 import { questionReviewList, questionUpdate } from "../../api";
+import ViewQuestionPopup from "../Submitter/ViewQuestionPopup";
 
 function ReviewQuestions(props) {
     const { sidebarOptions } = props;
 
     const [removePopupOpen, setRemovePopupOpen] = useState(false);
+    const [questionPopupOpen, setQuestionPopupOpen] = useState(false);
+    const [selectedQuestion, setSelectedQuestion] = useState({});
 
     const [selectedStatus, setSelectedStatus] = useState(-1);
 
@@ -37,11 +37,19 @@ function ReviewQuestions(props) {
         setRemovePopupOpen(true);
     };
 
-    const { mutate: freezeQuestion } = useMutation((id => questionUpdate({id, status: "freeze"})), {
-        onSuccess: () => {
-            console.log("success freeze");
+    const handleQuestionClick = (question) => {
+        setSelectedQuestion(question);
+        setQuestionPopupOpen(true);
+    };
+
+    const { mutate: freezeQuestion } = useMutation(
+        (id) => questionUpdate({ id, status: "freeze" }),
+        {
+            onSuccess: () => {
+                console.log("success freeze");
+            },
         }
-    });
+    );
 
     const onFreeze = (id) => {
         console.log("freeze");
@@ -87,6 +95,7 @@ function ReviewQuestions(props) {
                         <>
                             <TableRow
                                 key={i}
+                                onClick={() => handleQuestionClick(question)}
                                 values={[
                                     <>
                                         <FiFile />
@@ -103,21 +112,21 @@ function ReviewQuestions(props) {
                                 ]}
                             />
 
-                            <tr>
-                                <td colSpan={5}>
-                                    <div className="question-description">
-                                        <p>
-                                            Question: {question.statement.text}
-                                        </p>
-                                        {question.options.map((option, i) => (
-                                            <div>
-                                                <span>{i + 1}.</span>
-                                                <span>{option.text}</span>
-                                            </div>
-                                        ))}
-                                    </div>
-                                </td>
-                            </tr>
+                            {/*<tr>*/}
+                            {/*    <td colSpan={5}>*/}
+                            {/*        <div className="question-description">*/}
+                            {/*            <p>*/}
+                            {/*                Question: {question.statement.text}*/}
+                            {/*            </p>*/}
+                            {/*            {question.options.map((option, i) => (*/}
+                            {/*                <div>*/}
+                            {/*                    <span>{i + 1}.</span>*/}
+                            {/*                    <span>{option.text}</span>*/}
+                            {/*                </div>*/}
+                            {/*            ))}*/}
+                            {/*        </div>*/}
+                            {/*    </td>*/}
+                            {/*</tr>*/}
                         </>
                     ))}
                 </TableBody>
@@ -125,6 +134,12 @@ function ReviewQuestions(props) {
 
             {removePopupOpen && (
                 <RemoveQuestionPopup setOpen={setRemovePopupOpen} />
+            )}
+            {questionPopupOpen && (
+                <ViewQuestionPopup
+                    question={selectedQuestion}
+                    setOpen={setQuestionPopupOpen}
+                />
             )}
         </Page>
     );
