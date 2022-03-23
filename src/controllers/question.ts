@@ -41,13 +41,21 @@ async function info(req: Request, res: Response) {
 async function list(req: Request, res: Response) {
     if ((req.user as UserDocument).role === ROLES.Admin) {
         const questions = await Question.find().exec();
-        res.json(await Promise.all(questions.map(x => preprocessQuestion(x.toObject()))));
+        res.json(
+            await Promise.all(
+                questions.map((x) => preprocessQuestion(x.toObject()))
+            )
+        );
     } else {
         // find questions of the user
         const questions = await Question.find({
             user: (req.user as UserDocument)._id,
         }).exec();
-        res.json(await Promise.all(questions.map(x => preprocessQuestion(x.toObject()))));
+        res.json(
+            await Promise.all(
+                questions.map((x) => preprocessQuestion(x.toObject()))
+            )
+        );
     }
 }
 
@@ -65,7 +73,7 @@ async function update(req: Request, res: Response) {
         req
     );
 
-    res.sendStatus(200);
+    res.status(200).json({ id });
 }
 
 async function remove(req: Request, res: Response) {
@@ -79,7 +87,7 @@ async function remove(req: Request, res: Response) {
         },
         req
     );
-    res.sendStatus(200);
+    res.status(200).json({ id });
 }
 
 // TODO: types go brr
@@ -99,21 +107,24 @@ export async function preprocessQuestion(question: any): Promise<any> {
             ...question,
             subject: "invalid subject",
             topic: "invalid topic",
-        }
+        };
     }
 }
 
 async function toReview(_req: Request, res: Response) {
-    const questions = await Question.find({ status: "pending" }).sort({ createdAt: 1 });
+    const questions = await Question.find({ status: "pending" }).sort({
+        createdAt: 1,
+    });
     // TODO: try avoid more than one review per question collision
-    res.json(await Promise.all(questions.map(x => preprocessQuestion(x.toObject()))));
+    res.json(
+        await Promise.all(
+            questions.map((x) => preprocessQuestion(x.toObject()))
+        )
+    );
 }
 
 export default Router()
-    .post(
-        "/create",
-        handleError(create)
-    )
+    .post("/create", handleError(create))
     .get("/info", handleError(info))
     .get("/list", handleError(list))
     .post(

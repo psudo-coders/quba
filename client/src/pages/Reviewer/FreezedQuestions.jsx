@@ -15,17 +15,23 @@ import Loading from "../../components/Loading/Loading";
 import ActionOptions from "../../components/ActionOptions/ActionOptions";
 import { useNavigate } from "react-router-dom";
 import useDropdownData from "../../hooks/useDropdownData";
-import { subjectList, topicList } from "../../api";
+import { questionRemove, subjectList, topicList } from "../../api";
 import { difficulties } from "../../config/difficulties";
-import { useQuery } from "react-query"
-import { questionFrozen } from '../../api'
+import { useMutation, useQuery, useQueryClient } from "react-query";
+import { questionFrozen } from "../../api";
+import ViewQuestionPopup from "../Submitter/ViewQuestionPopup";
 
 function FreezedQuestions(props) {
     const { sidebarOptions } = props;
 
+    const queryClient = useQueryClient();
+
     const [difficulty, setDifficulty] = useState(-1);
     const [subject, setSubject] = useState(-1);
     const [topic, setTopic] = useState(-1);
+
+    const [questionPopupOpen, setQuestionPopupOpen] = useState(false);
+    const [selectedQuestion, setSelectedQuestion] = useState({});
 
     const [topicsData, tIsSuccess] = useDropdownData("topicList", topicList);
     const [subjectsData, sIsSuccess] = useDropdownData(
@@ -33,8 +39,7 @@ function FreezedQuestions(props) {
         subjectList
     );
 
-    const [removePopupOpen, setRemovePopupOpen] = useState(false);
-    const {data, isLoading} = useQuery("questionFrozen", questionFrozen);
+    const { data, isLoading } = useQuery("questionFrozen", questionFrozen);
 
     const goto = useNavigate();
 
@@ -42,11 +47,22 @@ function FreezedQuestions(props) {
         goto("/reviewer/question/edit");
     };
 
-    const onRemove = () => {
-        setRemovePopupOpen(true);
+    const removeQuestion = useMutation((id) => questionRemove({ id }), {
+        onSuccess: () => {
+            queryClient.invalidateQueries("questionFrozen");
+        },
+    });
+
+    const onRemove = (id) => {
+        removeQuestion.mutate(id);
     };
 
-    if(isLoading) return <Loading />
+    const handleQuestionClick = (question) => {
+        setSelectedQuestion(question);
+        setQuestionPopupOpen(true);
+    };
+
+    if (isLoading) return <Loading />;
 
     return (
         <Page
@@ -100,8 +116,9 @@ function FreezedQuestions(props) {
                                 question.subject,
                                 question.topic,
                                 <ActionOptions
+                                    onView={() => handleQuestionClick(question)}
                                     onEdit={onEdit}
-                                    onRemove={onRemove}
+                                    onRemove={() => onRemove(question._id)}
                                 />,
                             ]}
                         />
@@ -112,8 +129,14 @@ function FreezedQuestions(props) {
                 <Button label={"Prev"} icon={<FaArrowLeft />} alt />
                 <Button label={"Next"} icon={<FaArrowRight />} alt />
             </div> */}
-            {removePopupOpen && (
-                <RemoveQuestionPopup setOpen={setRemovePopupOpen} />
+            {removeQuestion.isSuccess && (
+                <RemoveQuestionPopup onClose={() => removeQuestion.reset()} />
+            )}
+            {questionPopupOpen && (
+                <ViewQuestionPopup
+                    question={selectedQuestion}
+                    setOpen={setQuestionPopupOpen}
+                />
             )}
         </Page>
     );

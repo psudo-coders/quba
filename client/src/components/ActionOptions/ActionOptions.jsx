@@ -2,10 +2,10 @@ import React, { useState } from "react";
 
 import "./ActionOptions.css";
 import { BsNodePlusFill, BsThreeDots } from "react-icons/bs";
-import { AiFillEdit, AiFillMinusCircle } from "react-icons/ai";
+import { AiFillEdit, AiFillEye, AiFillMinusCircle } from "react-icons/ai";
 
 function ActionOptions(props) {
-    const { onEdit, onFreeze, onRemove } = props;
+    const { onView, onEdit, onFreeze, onRemove } = props;
 
     const [open, setOpen] = useState(false);
 
@@ -18,6 +18,11 @@ function ActionOptions(props) {
             <BsThreeDots onClick={toggle} />
             {open && (
                 <div className={"action-options"}>
+                    {onView && (
+                        <div className={"action"} onClick={onView}>
+                            <AiFillEye color={"black"} size={20} /> View
+                        </div>
+                    )}
                     {onEdit && (
                         <div className={"action"} onClick={onEdit}>
                             <AiFillEdit color={"blue"} size={20} /> Edit
