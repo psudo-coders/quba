@@ -91,10 +91,10 @@ function YourQuestions(props) {
                     ))}
                 </TableBody>
             </Table>
-            <div className="pagination">
+            {/* <div className="pagination">
                 <Button label={"Prev"} icon={<FaArrowLeft />} alt />
                 <Button label={"Next"} icon={<FaArrowRight />} alt />
-            </div>
+            </div> */}
             {popupOpen && <ViewQuestionPopup setOpen={setPopupOpen} />}
         </Page>
     );
