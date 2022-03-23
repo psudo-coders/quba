@@ -11,11 +11,14 @@ import TableRow from "../../components/Table/TableRow";
 import { FiFile } from "react-icons/fi";
 import RemoveQuestionPopup from "./RemoveQuestionPopup";
 import Dropdown from "../../components/Dropdown/Dropdown";
+import Loading from "../../components/Loading/Loading";
 import ActionOptions from "../../components/ActionOptions/ActionOptions";
 import { useNavigate } from "react-router-dom";
 import useDropdownData from "../../hooks/useDropdownData";
 import { subjectList, topicList } from "../../api";
 import { difficulties } from "../../config/difficulties";
+import { useQuery } from "react-query"
+import { questionFrozen } from '../../api'
 
 function FreezedQuestions(props) {
     const { sidebarOptions } = props;
@@ -31,6 +34,7 @@ function FreezedQuestions(props) {
     );
 
     const [removePopupOpen, setRemovePopupOpen] = useState(false);
+    const {data, isLoading} = useQuery("questionFrozen", questionFrozen);
 
     const goto = useNavigate();
 
@@ -41,6 +45,8 @@ function FreezedQuestions(props) {
     const onRemove = () => {
         setRemovePopupOpen(true);
     };
+
+    if(isLoading) return <Loading />
 
     return (
         <Page
@@ -83,16 +89,16 @@ function FreezedQuestions(props) {
                     />
                 </TableHead>
                 <TableBody>
-                    {[0, 0, 0, 0, 0].map((v, i) => (
+                    {data.map((question, i) => (
                         <TableRow
                             key={i}
                             values={[
                                 <>
                                     <FiFile />
-                                    <span>#17145651</span>
+                                    <span>{question._id.substr(-8)}</span>
                                 </>,
-                                "English",
-                                "Grammar",
+                                question.subject,
+                                question.topic,
                                 <ActionOptions
                                     onEdit={onEdit}
                                     onRemove={onRemove}

@@ -10,13 +10,16 @@ import PopupAlert from "../../components/PopupAlert/PopupAlert";
 import { questionCreate, subjectList, topicList } from "../../api";
 import useDropdownData from "../../hooks/useDropdownData";
 import { difficulties } from "../../config/difficulties";
+import { useNavigate } from "react-router-dom";
 
 function SubmitQuestion(props) {
     const { sidebarOptions } = props;
+  
+    const [popupOpen, setPopupOpen] = useState(false);
 
     const [dSubject, setDSubject] = useState(-1);
     const [dTopic, setDTopic] = useState(-1);
-
+  
     const [qData, setQData] = useState({
         subject: -1,
         topic: -1,
@@ -24,7 +27,7 @@ function SubmitQuestion(props) {
         statement: { text: "" },
         solution: { text: "" },
         correctAnswer: 1,
-        options: [{ id: 1, text: "" }],
+        options: [{ id: 0, text: "" }],
     });
 
     const addOption = () => {
@@ -42,6 +45,7 @@ function SubmitQuestion(props) {
         "subjectList",
         subjectList
     );
+    const navigate = useNavigate();
 
     const SubmitQuestion = useMutation(questionCreate, {
         onSuccess: () => {
@@ -52,6 +56,8 @@ function SubmitQuestion(props) {
 
     const doSubmit = () => {
         console.log(qData);
+        setPopupOpen(true);
+        console.log(popupOpen);
         SubmitQuestion.mutate(qData);
     };
 
@@ -109,14 +115,15 @@ function SubmitQuestion(props) {
                 )
             }
         >
-            {SubmitQuestion.isSuccess && (
+             {SubmitQuestion.isSuccess && popupOpen && (
                 <PopupAlert
                     className={"remove-question"}
                     heading={"Submit Question"}
                     middle={<FaCheck className={"eraser"} />}
                     bottom={"Question submitted"}
+                    setOpen={setPopupOpen}
                 />
-            )}
+            ) }
             <div className={"submit-question-form"}>
                 <AttachTextArea
                     heading={"Enter question details"}
