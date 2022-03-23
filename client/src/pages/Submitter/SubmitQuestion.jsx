@@ -39,7 +39,10 @@ function SubmitQuestion(props) {
         });
     };
 
-    const {data: subjects} = useQuery("subjectList", subjectList);
+    let {data: subjects} = useQuery("subjectList", subjectList);
+    if (subjects === undefined) subjects = [];
+    const subjectNames = subjects.map((subject) => subject.name);
+    const subjectIds = subjects.map((subject) => subject._id);
 
     const SubmitQuestion = useMutation(
         questionCreate,
@@ -65,11 +68,11 @@ function SubmitQuestion(props) {
                 <div className={"dropdowns-container"}>
                     <Dropdown
                         name={"Subject"}
-                        options={dummyData.subjects}
+                        options={subjectNames}
                         selected={-1}
                         setSelected={(id) => {
                             setQData((prev) => {
-                                return { ...prev, subject: id };
+                                return { ...prev, subject: subjectIds[id] };
                             });
                         }}
                     />
